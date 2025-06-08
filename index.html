@@ -8,12 +8,13 @@
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0; /* Màu nền nhẹ nhàng */
+            background-color: #f0f0f0;
             color: #333;
+            line-height: 1.6;
         }
 
         .header {
-            background-color: #ff0000; /* Màu đỏ như hình */
+            background-color: #ff0000;
             color: white;
             padding: 20px;
             text-align: center;
@@ -22,75 +23,50 @@
         }
 
         .search-bar {
-            background-color: #0000ff; /* Màu xanh dương như hình */
+            background-color: #0000ff;
             padding: 10px;
             text-align: center;
         }
 
         .search-bar input {
-            width: 80%; /* Chiều rộng ô tìm kiếm */
+            width: 80%;
             padding: 8px;
             border: none;
             border-radius: 5px;
             font-size: 1em;
         }
 
-        .game-list-container {
+        /* --- PHẦN MỚI: CSS cho khung hiển thị game tổng quát --- */
+        .game-display-area { /* Đây là cái khung nền trắng bao quanh game và các nút điều khiển */
+            background-color: white;
             padding: 20px;
-            background-color: white; /* Nền trắng cho phần danh sách game */
-            margin: 20px; /* Tạo khoảng cách với viền trang */
-            border-radius: 8px; /* Bo góc nhẹ */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Đổ bóng nhẹ nhàng */
+            margin: 20px auto; /* Căn giữa */
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center; /* Để căn giữa iframe bên trong */
+            display: none; /* Ban đầu ẩn hoàn toàn */
         }
+        /* --- KẾT THÚC PHẦN MỚI --- */
 
-        .game-list-container h2 {
-            margin-top: 0;
-            color: #333;
-        }
-
-        ul {
-            list-style-type: none; /* Bỏ dấu chấm đầu dòng */
-            padding: 0;
-        }
-
-        li {
-            padding: 8px 0;
-            border-bottom: 1px solid #eee; /* Đường kẻ mờ ngăn cách các game */
-            font-size: 1.1em;
-        }
-
-        li:last-child {
-            border-bottom: none; /* Game cuối cùng không có đường kẻ */
-        }
-
-        a {
-            text-decoration: none; /* Bỏ gạch chân link */
-            color: #0000ff; /* Màu xanh link */
-            transition: color 0.3s ease;
-        }
-
-        a:hover {
-            color: #004ac9; /* Đổi màu khi rê chuột */
-        }
-
-        /* CSS cho phần game iframe */
         .game-container {
-            width: 800px; /* Kích thước ban đầu */
+            width: 800px; /* Kích thước game */
             height: 600px;
-            max-width: 90vw; /* Giới hạn chiều rộng tối đa theo màn hình */
-            max-height: 90vh; /* Giới hạn chiều cao tối đa theo màn hình */
-            border: 5px solid #0064ff; /* Khung viền màu Ghibli */
-            box-shadow: 0 0 20px rgba(0, 100, 255, 0.5); /* Hiệu ứng đổ bóng */
-            margin: 20px auto; /* Căn giữa và tạo khoảng cách */
-            display: none; /* Ban đầu ẩn game đi */
+            max-width: 100%; /* Đảm bảo không tràn ra ngoài game-display-area */
+            max-height: 100vh; /* Giới hạn chiều cao */
+            border: 5px solid #0064ff;
+            box-shadow: 0 0 20px rgba(0, 100, 255, 0.5);
+            margin: 0 auto; /* Căn giữa iframe */
             position: relative;
             overflow: hidden;
+            /* display: block; hoặc inline-block trong JS khi cần hiển thị */
         }
 
         .game-frame {
             width: 100%;
             height: 100%;
             border: none;
+            display: block; /* Đảm bảo iframe luôn hiển thị trong khung của nó */
         }
 
         .game-controls {
@@ -113,133 +89,10 @@
         .game-button:hover {
             background-color: #004ac9;
         }
-    </style>
-</head>
-<body>
-    <div class="header">
-        Collection of old retro games.
-    </div>
-
-    <div class="search-bar">
-        <input type="text" placeholder="Search for games...">
-    </div>
-
-    <div class="game-list-container">
-        <h2>list game</h2>
-        <ul>
-            <li><a href="#final-fight-game">Final Fight (SNES) 👊</a></li>
-            <li><a href="#super-bomberman-3-game">Super Bomberman 3 (Europe) 💣</a></li>
-            <li><a href="#another-game-game">Tên Game Khác Của Mày ✨</a></li>
-            </ul>
-    </div>
-
-    <div id="final-fight-game" class="game-container">
-        <iframe class="game-frame" src="/retro-games/Snes/Final%20Fight%20(USA)/Final%20Fight%20(USA).html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
-        <div class="game-controls">
-            <button class="game-button" onclick="requestFullscreen('final-fight-game')">Full Màn Hình! 🌟</button>
-            <button class="game-button" onclick="hideGame('final-fight-game')">Ẩn Game ❌</button>
-        </div>
-    </div>
-
-    <div id="super-bomberman-3-game" class="game-container">
-        <iframe class="game-frame" src="/retro-games/Snes/Super%20Bomberman%203%20(Europe)/Super%20Bomberman%203%20(Europe).html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
-        <div class="game-controls">
-            <button class="game-button" onclick="requestFullscreen('super-bomberman-3-game')">Full Màn Hình! 🌟</button>
-            <button class="game-button" onclick="hideGame('super-bomberman-3-game')">Ẩn Game ❌</button>
-        </div>
-    </div>
-
-    <div id="another-game-game" class="game-container">
-        <iframe class="game-frame" src="/retro-games/duong-dan-toi-game-khac/GameKhac.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
-        <div class="game-controls">
-            <button class="game-button" onclick="requestFullscreen('another-game-game')">Full Màn Hình! 🌟</button>
-            <button class="game-button" onclick="hideGame('another-game-game')">Ẩn Game ❌</button>
-        </div>
-    </div>
-
-
-    <script>
-        // Hàm để ẩn tất cả các game khác và hiển thị game được chọn
-        function displayGame(gameId) {
-            // Ẩn tất cả các khung game khác và dừng chúng
-            document.querySelectorAll('.game-container').forEach(gameDiv => {
-                gameDiv.style.display = 'none';
-                const iframe = gameDiv.querySelector('.game-frame');
-                if (iframe) {
-                    // Lưu src gốc vào thuộc tính data-original-src nếu chưa có
-                    if (!iframe.hasAttribute('data-original-src')) {
-                        iframe.setAttribute('data-original-src', iframe.src);
-                    }
-                    // Reset src về about:blank để dừng game và giải phóng tài nguyên
-                    iframe.src = 'about:blank'; 
-                }
-            });
-
-            // Hiển thị khung game được chọn và tải game
-            const selectedGameContainer = document.getElementById(gameId);
-            if (selectedGameContainer) {
-                selectedGameContainer.style.display = 'block';
-                const iframe = selectedGameContainer.querySelector('.game-frame');
-                if (iframe) {
-                    // Lấy src gốc từ thuộc tính data-original-src và tải lại game
-                    const originalSrc = iframe.getAttribute('data-original-src');
-                    if (originalSrc) { // Đảm bảo có src gốc để tải
-                        iframe.src = originalSrc;
-                    }
-                }
-            }
-        }
-
-        // Hàm yêu cầu fullscreen
-        function requestFullscreen(containerId) {
-            const gameContainer = document.getElementById(containerId);
-            if (gameContainer.requestFullscreen) {
-                gameContainer.requestFullscreen();
-            } else if (gameContainer.webkitRequestFullscreen) { /* Safari */
-                gameContainer.webkitRequestFullscreen();
-            } else if (gameContainer.msRequestFullscreen) { /* IE11 */
-                gameContainer.msRequestFullscreen();
-            }
-        }
-
-        // Hàm ẩn game đi
-        function hideGame(gameId) {
-            const game = document.getElementById(gameId);
-            if (game) {
-                game.style.display = 'none';
-                // Tạm dừng/reset game trong iframe khi ẩn đi
-                const iframe = game.querySelector('.game-frame');
-                if (iframe) {
-                    // Lưu src gốc (nếu chưa có) và reset src về about:blank
-                    if (!iframe.hasAttribute('data-original-src')) {
-                        iframe.setAttribute('data-original-src', iframe.src);
-                    }
-                    iframe.src = 'about:blank'; // Reset src để dừng game và giải phóng tài nguyên
-                }
-            }
-        }
-
-        // Gắn sự kiện click cho các link game và thiết lập trạng thái ban đầu
-        document.addEventListener('DOMContentLoaded', () => {
-            // Ẩn tất cả game khi trang tải lần đầu và lưu src gốc
-            document.querySelectorAll('.game-container').forEach(gameDiv => {
-                gameDiv.style.display = 'none';
-                const iframe = gameDiv.querySelector('.game-frame');
-                if (iframe) {
-                    iframe.setAttribute('data-original-src', iframe.src); // Lưu src gốc vào thuộc tính data-original-src
-                    iframe.src = 'about:blank'; // Đặt src ban đầu là rỗng để không tự động load game nào cả
-                }
-            });
-
-            // Gắn sự kiện click cho các link trong danh sách game
-            document.querySelectorAll('.game-list-container a').forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault(); // Ngăn chặn hành vi mặc định của link
-                    const targetDivId = this.getAttribute('href').substring(1); // Lấy id của div game (ví dụ: "final-fight-game")
-                    displayGame(targetDivId);
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+        
+        /* CSS cho danh sách game (không thay đổi nhiều) */
+        .game-list-container {
+            padding: 20px;
+            background-color: white;
+            margin: 20px auto; /* Căn giữa và tạo khoảng cách */
+            max-width:
