@@ -127,19 +127,10 @@
     <div class="game-list-container">
         <h2>list game</h2>
         <ul>
-            <li><a href="#super-mario-world-game">Super Mario World (SNES) 🍄</a></li>
-            <li><a href="/retro-games/Snes/Final%20Fight%20(USA)/Final%20Fight%20(USA).html">Final Fight (USA) 👊</a></li>
-            <li><a href="/retro-games/Snes/Super%20Bomberman%203%20(Europe)/Super%20Bomberman%203%20(Europe).html">Super Bomberman 3 (SNES) 💣</a></li>
+            <li><a href="#final-fight-game">Final Fight (SNES) 👊</a></li>
+            <li><a href="#super-bomberman-3-game">Super Bomberman 3 (Europe) 💣</a></li>
             <li><a href="#another-game-game">Tên Game Khác Của Mày ✨</a></li>
             </ul>
-    </div>
-
-    <div id="super-mario-world-game" class="game-container">
-        <iframe class="game-frame" src="mario-bros/Super%20Mario%20World%20(USA).html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
-        <div class="game-controls">
-            <button class="game-button" onclick="requestFullscreen('super-mario-world-game')">Full Màn Hình! 🌟</button>
-            <button class="game-button" onclick="hideGame('super-mario-world-game')">Ẩn Game ❌</button>
-        </div>
     </div>
 
     <div id="final-fight-game" class="game-container">
@@ -151,7 +142,7 @@
     </div>
 
     <div id="super-bomberman-3-game" class="game-container">
-        <iframe class="game-frame" src="bomberman/Super%20Bomberman%203%20(English).html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+        <iframe class="game-frame" src="/retro-games/Snes/Super%20Bomberman%203%20(Europe)/Super%20Bomberman%203%20(Europe).html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
         <div class="game-controls">
             <button class="game-button" onclick="requestFullscreen('super-bomberman-3-game')">Full Màn Hình! 🌟</button>
             <button class="game-button" onclick="hideGame('super-bomberman-3-game')">Ẩn Game ❌</button>
@@ -159,7 +150,7 @@
     </div>
 
     <div id="another-game-game" class="game-container">
-        <iframe class="game-frame" src="duong-dan-toi-game-khac/GameKhac.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+        <iframe class="game-frame" src="/retro-games/duong-dan-toi-game-khac/GameKhac.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
         <div class="game-controls">
             <button class="game-button" onclick="requestFullscreen('another-game-game')">Full Màn Hình! 🌟</button>
             <button class="game-button" onclick="hideGame('another-game-game')">Ẩn Game ❌</button>
@@ -170,28 +161,31 @@
     <script>
         // Hàm để ẩn tất cả các game khác và hiển thị game được chọn
         function displayGame(gameId) {
-            // Ẩn tất cả các khung game
+            // Ẩn tất cả các khung game khác và dừng chúng
             document.querySelectorAll('.game-container').forEach(gameDiv => {
                 gameDiv.style.display = 'none';
-                // Nếu game đang chạy, có thể tạm dừng/reset iframe để tránh tốn tài nguyên
                 const iframe = gameDiv.querySelector('.game-frame');
                 if (iframe) {
-                   iframe.contentWindow.postMessage('stop_game', '*'); // Giả sử game có cơ chế dừng bằng postMessage
-                   // Hoặc đơn giản hơn là reset src về rỗng để dừng load
-                   // iframe.src = 'about:blank'; // Có thể cần load lại khi hiển thị
+                    // Lưu src gốc vào thuộc tính data-original-src nếu chưa có
+                    if (!iframe.hasAttribute('data-original-src')) {
+                        iframe.setAttribute('data-original-src', iframe.src);
+                    }
+                    // Reset src về about:blank để dừng game và giải phóng tài nguyên
+                    iframe.src = 'about:blank'; 
                 }
             });
 
-            // Hiển thị khung game được chọn
+            // Hiển thị khung game được chọn và tải game
             const selectedGameContainer = document.getElementById(gameId);
             if (selectedGameContainer) {
                 selectedGameContainer.style.display = 'block';
                 const iframe = selectedGameContainer.querySelector('.game-frame');
-                // Quan trọng: Đảm bảo iframe load lại src nếu nó đã bị reset trước đó
-                // hoặc nếu nó chưa load bao giờ
-                const originalSrc = iframe.getAttribute('src'); // Lấy lại src ban đầu đã đặt trong HTML
-                if (iframe.src === 'about:blank' || !iframe.src) {
-                    iframe.src = originalSrc; // Load lại game
+                if (iframe) {
+                    // Lấy src gốc từ thuộc tính data-original-src và tải lại game
+                    const originalSrc = iframe.getAttribute('data-original-src');
+                    if (originalSrc) { // Đảm bảo có src gốc để tải
+                        iframe.src = originalSrc;
+                    }
                 }
             }
         }
@@ -216,29 +210,32 @@
                 // Tạm dừng/reset game trong iframe khi ẩn đi
                 const iframe = game.querySelector('.game-frame');
                 if (iframe) {
-                    iframe.contentWindow.postMessage('stop_game', '*'); // Nếu game hỗ trợ dừng
+                    // Lưu src gốc (nếu chưa có) và reset src về about:blank
+                    if (!iframe.hasAttribute('data-original-src')) {
+                        iframe.setAttribute('data-original-src', iframe.src);
+                    }
                     iframe.src = 'about:blank'; // Reset src để dừng game và giải phóng tài nguyên
                 }
             }
         }
 
-        // Gắn sự kiện click cho các link game
+        // Gắn sự kiện click cho các link game và thiết lập trạng thái ban đầu
         document.addEventListener('DOMContentLoaded', () => {
-            // Ẩn tất cả game khi trang tải lần đầu
-            document.querySelectorAll('.game-container').forEach(game => {
-                game.style.display = 'none';
-                // Reset src của iframe về about:blank khi tải trang để không tự động load game nào cả
-                const iframe = game.querySelector('.game-frame');
+            // Ẩn tất cả game khi trang tải lần đầu và lưu src gốc
+            document.querySelectorAll('.game-container').forEach(gameDiv => {
+                gameDiv.style.display = 'none';
+                const iframe = gameDiv.querySelector('.game-frame');
                 if (iframe) {
-                    iframe.setAttribute('data-original-src', iframe.src); // Lưu src gốc
-                    iframe.src = 'about:blank'; // Đặt src ban đầu là rỗng
+                    iframe.setAttribute('data-original-src', iframe.src); // Lưu src gốc vào thuộc tính data-original-src
+                    iframe.src = 'about:blank'; // Đặt src ban đầu là rỗng để không tự động load game nào cả
                 }
             });
 
+            // Gắn sự kiện click cho các link trong danh sách game
             document.querySelectorAll('.game-list-container a').forEach(link => {
                 link.addEventListener('click', function(event) {
                     event.preventDefault(); // Ngăn chặn hành vi mặc định của link
-                    const targetDivId = this.getAttribute('href').substring(1); // Lấy id của div game (ví dụ: "super-mario-world-game")
+                    const targetDivId = this.getAttribute('href').substring(1); // Lấy id của div game (ví dụ: "final-fight-game")
                     displayGame(targetDivId);
                 });
             });
