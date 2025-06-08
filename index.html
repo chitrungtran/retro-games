@@ -36,6 +36,61 @@
             font-size: 1em;
         }
 
+        /* --- PHẦN MỚI: CSS cho khung hiển thị game --- */
+        .game-display-area {
+            background-color: white;
+            padding: 20px;
+            margin: 20px auto; /* Căn giữa */
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            display: none; /* Ban đầu ẩn hoàn toàn */
+        }
+
+        .game-container {
+            width: 800px; /* Kích thước game */
+            height: 600px;
+            max-width: 100%; /* Đảm bảo không tràn ra ngoài game-display-area */
+            max-height: 100vh; /* Giới hạn chiều cao */
+            border: 5px solid #0064ff;
+            box-shadow: 0 0 20px rgba(0, 100, 255, 0.5);
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            /* Đảm bảo game iframe hiển thị ban đầu khi được chọn */
+        }
+
+        .game-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block; /* Đảm bảo iframe luôn hiển thị trong khung của nó */
+        }
+
+        .game-controls {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .game-button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #0064ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 0 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .game-button:hover {
+            background-color: #004ac9;
+        }
+        /* --- KẾT THÚC PHẦN MỚI --- */
+
+
         .game-list-container {
             padding: 20px;
             background-color: white;
@@ -76,7 +131,7 @@
 
         a:hover {
             color: #004ac9;
-            text-decoration: underline; /* Thêm gạch chân khi rê chuột */
+            text-decoration: underline;
         }
 
         footer {
@@ -96,17 +151,134 @@
         <input type="text" placeholder="Search for games...">
     </div>
 
+    <div id="game-display-area-wrapper" class="game-display-area">
+        <div id="final-fight-game" class="game-container" style="display:none;">
+            <iframe class="game-frame" src="Snes/Final%20Fight%20(USA)/Final%20Fight%20(USA).html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <div class="game-controls">
+                <button class="game-button" onclick="requestFullscreen('final-fight-game')">Full Màn Hình! 🌟</button>
+                <button class="game-button" onclick="hideGame('final-fight-game')">Ẩn Game ❌</button>
+            </div>
+        </div>
+
+        <div id="super-bomberman-3-game" class="game-container" style="display:none;">
+            <iframe class="game-frame" src="Snes/Super%20Bomberman%203%20(Europe)/Super%20Bomberman%203%20(Europe).html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <div class="game-controls">
+                <button class="game-button" onclick="requestFullscreen('super-bomberman-3-game')">Full Màn Hình! 🌟</button>
+                <button class="game-button" onclick="hideGame('super-bomberman-3-game')">Ẩn Game ❌</button>
+            </div>
+        </div>
+
+        <div id="another-game-game" class="game-container" style="display:none;">
+            <iframe class="game-frame" src="Snes/Another%20Game/Another%20Game.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <div class="game-controls">
+                <button class="game-button" onclick="requestFullscreen('another-game-game')">Full Màn Hình! 🌟</button>
+                <button class="game-button" onclick="hideGame('another-game-game')">Ẩn Game ❌</button>
+            </div>
+        </div>
+    </div>
     <div class="game-list-container">
         <h2>list game</h2>
         <ul>
-            <li><a href="Snes/Final%20Fight%20(USA)/Final%20Fight%20(USA).html" target="_blank">Final Fight (SNES) 👊</a></li>
-            <li><a href="Snes/Super%20Bomberman%203%20(Europe)/Super%20Bomberman%203%20(Europe).html" target="_blank">Super Bomberman 3 (Europe) 💣</a></li>
-            <li><a href="Snes/Ten%20Game%20Moi%20Cua%20May/GameMoi.html" target="_blank">Tên Game Khác Của Mày ✨</a></li>
+            <li><a href="#final-fight-game">Final Fight (SNES) 👊</a></li>
+            <li><a href="#super-bomberman-3-game">Super Bomberman 3 (Europe) 💣</a></li>
+            <li><a href="#another-game-game">Tên Game Khác Của Mày ✨</a></li>
             </ul>
     </div>
 
     <footer>
         <p>&copy; 2025 Bộ Sưu Tập Game Retro Của Trung. Vui vẻ nhé! 🎉</p>
     </footer>
+
+    <script>
+        // Hàm để ẩn tất cả các game khác và hiển thị game được chọn
+        function displayGame(gameId) {
+            // Hiển thị khung chứa game tổng quát
+            document.getElementById('game-display-area-wrapper').style.display = 'block';
+
+            // Ẩn tất cả các khung game con bên trong
+            document.querySelectorAll('.game-display-area .game-container').forEach(gameDiv => {
+                gameDiv.style.display = 'none';
+                const iframe = gameDiv.querySelector('.game-frame');
+                if (iframe) {
+                    // Lưu src gốc (nếu chưa có) và reset src về about:blank
+                    if (!iframe.hasAttribute('data-original-src')) {
+                        iframe.setAttribute('data-original-src', iframe.src);
+                    }
+                    iframe.src = 'about:blank'; // Reset src để dừng game và giải phóng tài nguyên
+                }
+            });
+
+            // Hiển thị khung game con được chọn và tải game
+            const selectedGameContainer = document.getElementById(gameId);
+            if (selectedGameContainer) {
+                selectedGameContainer.style.display = 'block';
+                const iframe = selectedGameContainer.querySelector('.game-frame');
+                if (iframe) {
+                    const originalSrc = iframe.getAttribute('data-original-src');
+                    if (originalSrc && iframe.src !== originalSrc) {
+                        iframe.src = originalSrc; // Tải lại game
+                    }
+                }
+            }
+        }
+
+        // Hàm yêu cầu fullscreen
+        function requestFullscreen(containerId) {
+            const gameContainer = document.getElementById(containerId);
+            if (gameContainer.requestFullscreen) {
+                gameContainer.requestFullscreen();
+            } else if (gameContainer.webkitRequestFullscreen) { /* Safari */
+                gameContainer.webkitRequestFullscreen();
+            } else if (gameContainer.msRequestFullscreen) { /* IE11 */
+                gameContainer.msRequestFullscreen();
+            }
+        }
+
+        // Hàm ẩn game đi
+        function hideGame(gameId) {
+            const game = document.getElementById(gameId);
+            if (game) {
+                game.style.display = 'none';
+                // Tạm dừng/reset game trong iframe khi ẩn đi
+                const iframe = game.querySelector('.game-frame');
+                if (iframe) {
+                    if (!iframe.hasAttribute('data-original-src')) {
+                        iframe.setAttribute('data-original-src', iframe.src);
+                    }
+                    iframe.src = 'about:blank'; // Reset src để dừng game và giải phóng tài nguyên
+                }
+            }
+            // Nếu không còn game nào đang hiển thị, ẩn luôn khung tổng quát
+            const gameDisplayArea = document.getElementById('game-display-area-wrapper');
+            if (gameDisplayArea && gameDisplayArea.querySelectorAll('.game-container[style*="display: block"]').length === 0) {
+                gameDisplayArea.style.display = 'none';
+            }
+        }
+
+        // Gắn sự kiện click cho các link game và thiết lập trạng thái ban đầu
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ẩn khung hiển thị game tổng quát khi trang tải lần đầu
+            document.getElementById('game-display-area-wrapper').style.display = 'none';
+
+            // Ẩn tất cả các game con và lưu src gốc khi trang tải lần đầu
+            document.querySelectorAll('.game-display-area .game-container').forEach(gameDiv => {
+                gameDiv.style.display = 'none';
+                const iframe = gameDiv.querySelector('.game-frame');
+                if (iframe) {
+                    iframe.setAttribute('data-original-src', iframe.src); // Lưu src gốc
+                    iframe.src = 'about:blank'; // Đặt src ban đầu là rỗng
+                }
+            });
+
+            // Gắn sự kiện click cho các link trong danh sách game
+            document.querySelectorAll('.game-list-container a').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Ngăn chặn hành vi mặc định của link
+                    const targetDivId = this.getAttribute('href').substring(1); // Lấy id của div game
+                    displayGame(targetDivId);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
