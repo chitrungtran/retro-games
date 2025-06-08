@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bộ Sưu Tập Game Retro Của Trung! 🎮</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0; /* Màu nền nhẹ nhàng */
+            color: #333;
+        }
+
+        .header {
+            background-color: #ff0000; /* Màu đỏ như hình */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .search-bar {
+            background-color: #0000ff; /* Màu xanh dương như hình */
+            padding: 10px;
+            text-align: center;
+        }
+
+        .search-bar input {
+            width: 80%; /* Chiều rộng ô tìm kiếm */
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .game-list-container {
+            padding: 20px;
+            background-color: white; /* Nền trắng cho phần danh sách game */
+            margin: 20px; /* Tạo khoảng cách với viền trang */
+            border-radius: 8px; /* Bo góc nhẹ */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Đổ bóng nhẹ nhàng */
+        }
+
+        .game-list-container h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none; /* Bỏ dấu chấm đầu dòng */
+            padding: 0;
+        }
+
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee; /* Đường kẻ mờ ngăn cách các game */
+            font-size: 1.1em;
+        }
+
+        li:last-child {
+            border-bottom: none; /* Game cuối cùng không có đường kẻ */
+        }
+
+        a {
+            text-decoration: none; /* Bỏ gạch chân link */
+            color: #0000ff; /* Màu xanh link */
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #004ac9; /* Đổi màu khi rê chuột */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        Collection of old retro games.
+    </div>
+
+    <div class="search-bar">
+        <input type="text" placeholder="Search for games...">
+    </div>
+
+    <div class="game-list-container">
+        <h2>list game</h2>
+        <ul>
+            <li><a href="#super-mario-world">Super Mario World (SNES) 🍄</a></li>
+            <li><a href="#final-fight">Final Fight (SNES) 👊</a></li>
+            <li><a href="#bomberman">Super Bomberman 3 (SNES) 💣</a></li>
+            <li><a href="#another-game">Tên Game Khác Của Mày ✨</a></li>
+            </ul>
+    </div>
+
+    <div id="super-mario-world-game" class="game-container" style="display:none;">
+        <iframe class="game-frame" src="LINK_GITHUB_PAGES_CỦA_MARIO" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+        <div class="game-controls">
+            <button class="game-button" onclick="requestFullscreen('super-mario-world-game')">Full Màn Hình! 🌟</button>
+            <button class="game-button" onclick="hideGame('super-mario-world-game')">Ẩn Game ❌</button>
+        </div>
+    </div>
+
+    <div id="final-fight-game" class="game-container" style="display:none;">
+        <iframe class="game-frame" src="LINK_GITHUB_PAGES_CỦA_FINAL_FIGHT" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+        <div class="game-controls">
+            <button class="game-button" onclick="requestFullscreen('final-fight-game')">Full Màn Hình! 🌟</button>
+            <button class="game-button" onclick="hideGame('final-fight-game')">Ẩn Game ❌</button>
+        </div>
+    </div>
+
+    <script>
+        // Hàm hiển thị game khi click vào tên game
+        document.querySelectorAll('.game-list-container a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault(); // Ngăn chặn nhảy link mặc định
+                const targetId = this.getAttribute('href').substring(1); // Lấy id của game
+                displayGame(targetId + '-game'); // Hiển thị game tương ứng
+            });
+        });
+
+        function displayGame(gameId) {
+            // Ẩn tất cả các game trước
+            document.querySelectorAll('.game-container').forEach(game => {
+                game.style.display = 'none';
+            });
+
+            // Hiển thị game được chọn
+            const selectedGame = document.getElementById(gameId);
+            if (selectedGame) {
+                selectedGame.style.display = 'block';
+                // Đảm bảo iframe load lại src nếu cần thiết (ví dụ khi game bị reset)
+                const iframe = selectedGame.querySelector('.game-frame');
+                if (iframe.src.startsWith('about:blank')) { // Chỉ load nếu chưa load
+                    // Link GitHub Pages của game sẽ được điền vào đây.
+                    // Mày cần sửa lại src của iframe này bằng link thực tế của game
+                    // khi mày nhúng vào Blogspot.
+                    // Ví dụ: iframe.src = 'https://trungit.github.io/my-retro-games/mario-bros/Super%20Mario%20World%20(USA).html';
+                    // Hiện tại để trống hoặc dùng about:blank để tránh load game ngay lập tức
+                    
+                    // Để đơn giản cho Blogspot, mình không cần phức tạp phần này.
+                    // iframe.src sẽ được đặt trực tiếp trong HTML.
+                }
+            }
+        }
+
+        // Hàm yêu cầu fullscreen (như đã giải thích trước đó)
+        function requestFullscreen(containerId) {
+            const gameContainer = document.getElementById(containerId);
+            if (gameContainer.requestFullscreen) {
+                gameContainer.requestFullscreen();
+            } else if (gameContainer.webkitRequestFullscreen) {
+                gameContainer.webkitRequestFullscreen();
+            } else if (gameContainer.msRequestFullscreen) {
+                gameContainer.msRequestFullscreen();
+            }
+        }
+
+        // Hàm ẩn game đi
+        function hideGame(gameId) {
+            const game = document.getElementById(gameId);
+            if (game) {
+                game.style.display = 'none';
+                // Nếu muốn dừng game hoàn toàn, có thể reset iframe src
+                game.querySelector('.game-frame').src = 'about:blank';
+            }
+        }
+
+        // Ẩn tất cả game khi trang tải lần đầu
+        document.addEventListener('DOMContentLoaded', () => {
+             document.querySelectorAll('.game-container').forEach(game => {
+                game.style.display = 'none';
+            });
+        });
+
+    </script>
+</body>
+</html>
