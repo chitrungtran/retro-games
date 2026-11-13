@@ -24,7 +24,6 @@ Ghi chép theo ngày đã có trong bộ nhớ/công việc và trạng thái ki
 
 ## Lệch / nợ kỹ thuật đang thấy (13/11/2026)
 
-- Nút “Download now” → romsfun.com, đồng thời repo host ROM công khai: mâu thuẫn với quy tắc không đặt link tải ROM (`RULES.md`, cần anh Trung quyết).
 - Câu Save/Load tiếng Anh chưa thống nhất; một số bài cũ tab Tiếng Việt trước.
 - `index.html` GitHub Pages cũ, còn placeholder.
 - `mame/3wonders` lệch mẫu SNES, chưa thấy bài blog tương ứng trên feed đã lấy.
@@ -34,7 +33,7 @@ Ghi chép theo ngày đã có trong bộ nhớ/công việc và trạng thái ki
 ## Bước tiếp
 
 1. Chờ 13:00 ngày 17/11/2026 (giờ Việt Nam) bật lại các routine đã tạm dừng (kiểm góp ý, quảng bá Facebook).
-2. Hỏi anh Trung các mục “cần quyết” trong `TASKS.md`, nhất là chính sách ROM / nút Download now — **không tự sửa trước khi có câu trả lời**.
+2. Hỏi anh Trung các mục “cần quyết” trong `TASKS.md`, **không tự sửa trước khi có câu trả lời**. (Chính sách ROM / nút Download now đã chốt 13/11/2026: giữ nguyên.)
 3. Khi thêm game: bám `RULES.md` và checklist cuối `TASKS.md`.
 4. (Tùy chọn, sau khi được giao) Cập nhật `index.html` hoặc README repo cho khớp danh sách game thật.
 

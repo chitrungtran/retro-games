@@ -1,6 +1,6 @@
 # RULES — retro-games / 8bitstory
 
-Cập nhật 13/11/2026 (giờ Việt Nam). Quy tắc code và nội dung đã chốt. Điểm đang mâu thuẫn với thực tế được ghi rõ, không tự sửa.
+Cập nhật 13/11/2026 (giờ Việt Nam). Quy tắc code và nội dung đã chốt. Chính sách ROM đã chốt ngày 13/11/2026.
 
 ## Chữ lưu game (nguyên văn đã chốt)
 
@@ -34,7 +34,7 @@ Thanh thông báo đầu trang: xem `DESIGN.md`.
 
 ## Mẫu bài blog
 
-- Nút đỏ `class="button"`: “Chơi toàn màn hình” / “Play full screen” (trỏ trang GitHub Pages) và “Download now” (xem mục mâu thuẫn dưới đây).
+- Nút đỏ `class="button"`: “Chơi toàn màn hình” / “Play full screen” (trỏ trang GitHub Pages) và “Download now” (trỏ trang tải trên romsfun.com — giữ nguyên theo quyết định của anh Trung ngày 13/11/2026).
 - Tab Median UI: bài mới để **English** là tab 1 (đã chốt từ 09/11/2026), không xếp chồng hai ngôn ngữ trong thân bài.
 - Nhãn bài game: `games`, `games_snes`, cộng nhãn series khi thuộc chuỗi (đã dùng: `Final_Fight`, `Super_Bomberman`, `Teenage_Mutant_Ninja_Turtles`, `Marvel`). Gắn thêm, không thay/xóa nhãn cũ.
 - Ảnh bìa tải lên Blogger để có thumbnail. Tiêu đề gõ trước, để permalink Automatic.
@@ -46,16 +46,14 @@ Thanh thông báo đầu trang: xem `DESIGN.md`.
 - Không lộ API key, token, mật khẩu, email cá nhân, hay bí mật khác (repo công khai).
 - Không viết trên bài rằng game tự lưu hoàn toàn / không cần bấm Save State.
 - Không đổi câu hướng dẫn lưu tiếng Việt đã chốt.
-- Không cho đọc giả tải ROM từ repo (không đặt link thẳng tới file `.sfc` / `.zip` trên GitHub hay GitHub Pages như nút “tải game”).
+- Không đặt link thẳng tới file `.sfc` / `.zip` trên GitHub hay GitHub Pages làm nút “tải game”; nút Download now chỉ trỏ trang tải romsfun.com như đang làm.
+- Không tự gỡ, đổi nút Download now hay xóa file `.sfc` trên repo (anh Trung đã chốt giữ nguyên).
 - Không spam, không đăng nhóm Facebook tiếng Việt để quảng bá.
 - Không đụng vào dự án khác (Huyền Cơ Các chỉ cộng trú thư mục `huyencocac/`; không xóa hay sửa asset đó khi làm việc game, trừ khi được giao).
 
-## Mâu thuẫn cần ghi nhận (không tự sửa)
+## Chính sách ROM (anh Trung chốt 13/11/2026)
 
-Quy tắc “không đặt link tải ROM” **đang không khớp** với blog đang chạy:
-
-- Nút **Download now** ở các bài game SNES hiện trỏ tới trang tải trên **romsfun.com** (ví dụ Final Fight → `https://romsfun.com/download/final-fight-7576`). Không trỏ file `.sfc` trong repo.
-- Chính repo **đang host công khai** các file `.sfc` / `3wonders.zip`; trang EmulatorJS nạp ROM từ đó, nên URL file đoán được.
-- Một số ảnh chụp trong game cũng đang lấy từ `romsfun.com/wp-content/uploads/`.
-
-Việc giữ, gỡ, hay đổi nút/ảnh/ROM host là quyết định của anh Trung — xem `TASKS.md`.
+- **Ngoại lệ:** blog 8bitstory và repo retro-games phục vụ nó được miễn quy tắc chung “không cho tải ROM”, nên được phép có nút Download và file `.sfc`. Mọi blog/trang khác của anh Trung vẫn giữ quy tắc không cho tải ROM.
+- Giữ nguyên nút **Download now** ở các bài game SNES, trỏ trang tải trên **romsfun.com** (ví dụ Final Fight → `https://romsfun.com/download/final-fight-7576`).
+- Giữ nguyên các file `.sfc` / `3wonders.zip` công khai trên repo; trang EmulatorJS nạp ROM từ đó.
+- Bài game mới làm theo đúng cách này; không cần hỏi lại.

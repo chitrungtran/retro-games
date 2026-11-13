@@ -4,7 +4,6 @@ Cập nhật 13/11/2026 (giờ Việt Nam). Checkbox phản ánh thực tế đ�
 
 ## Cần anh Trung quyết (không tự sửa)
 
-- [ ] **Nút “Download now” và việc host ROM.** Hiện nút trỏ romsfun.com; repo vẫn chứa `.sfc` công khai. Quy tắc “không cho tải ROM / không đặt link tải ROM” mâu thuẫn với thực tế này. Cần chọn một hướng (giữ nguyên; gỡ nút; đổi nút thành chỗ khác không phải trang tải ROM; hạn chế file ROM trên repo; ưu tiên homebrew/bản dịch fan; hoặc chính sách khác).
 - [ ] Có thống nhất câu tiếng Anh hướng dẫn Save/Load State thành một bản (hiện hai biến thể) rồi sửa các bài cũ không?
 - [ ] Có sửa các bài cũ vẫn để tab Tiếng Việt trước (Final Fight USA, Super Bomberman 3, và bài nào còn lại) cho khớp “English first” từ 09/11/2026?
 - [ ] Trang `index.html` trên GitHub Pages đã cũ (thiếu game, còn placeholder “Another Game”, footer © 2025): cập nhật, thu gọn, hay để nguyên vì mặt tiền là blog?
@@ -21,6 +20,7 @@ Cập nhật 13/11/2026 (giờ Việt Nam). Checkbox phản ánh thực tế đ�
 
 - [x] Theme Median UI 1.6 tối ưu: bỏ polyfill.io, dọn menu demo / link chết, ẩn ô quảng cáo mẫu (ẩn, chưa xóa), gắn slider ảnh game (khoảng 03–11/11/2026).
 - [x] Thống nhất hai nút đỏ “Chơi toàn màn hình” và “Download now”.
+- [x] Chốt chính sách ROM (13/11/2026): giữ nút Download now trỏ romsfun.com và file `.sfc` trên repo.
 - [x] Bật lưu Save State trong trình duyệt trên các trang SNES; `EJS_startOnLoaded = false`.
 - [x] Áp câu hướng dẫn Save/Load tiếng Việt đã chốt và dòng gamepad; thanh thông báo đầu trang.
 - [x] Tab English / Tiếng Việt (Median UI) trên bài; bài mới English trước.
@@ -34,5 +34,5 @@ Cập nhật 13/11/2026 (giờ Việt Nam). Checkbox phản ánh thực tế đ�
 - [ ] Anh Trung đã tải `.sfc` lên `Snes/<Tên>/`.
 - [ ] Thêm `<Tên>.html` đúng mẫu `ARCHITECTURE.md` / `RULES.md`.
 - [ ] Viết bài theo mẫu `DESIGN.md`: bìa tải lên Blogger, bảng thông tin, iframe, hai dòng `.note` đúng chữ, hai nút đỏ, tab English trước, nhãn đúng, permalink Automatic.
-- [ ] Không đặt link thẳng tới file `.sfc` trên GitHub. Nút “Download now”: làm đúng quyết định ở mục đầu (khi đã có).
+- [ ] Không đặt link thẳng tới file `.sfc` trên GitHub. Nút “Download now” trỏ trang tải romsfun.com của game đó (đã chốt 13/11/2026).
 - [ ] Kiểm tra bài trên máy tính và điện thoại: nút START GAME, Save State / Load State, chế độ tối.
