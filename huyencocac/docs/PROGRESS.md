@@ -1,6 +1,6 @@
 # PROGRESS — Huyền Cơ Các
 
-Mốc theo bộ nhớ công việc và kiểm lại ngày 13/11/2026 (giờ Việt Nam).
+Mốc theo bộ nhớ công việc và kiểm lại; bổ sung 16/11/2026 (giờ Việt Nam).
 
 ## Đã xong
 
@@ -10,6 +10,7 @@ Mốc theo bộ nhớ công việc và kiểm lại ngày 13/11/2026 (giờ Vi�
 - **11–12/11/2026:** Widget v2 (lịch pháp, mode trọn đời / năm / chọn ngày, hộp thông tin, in PDF, ba ô ngày sinh, quy tắc can chi / tháng âm / trực).
 - **12/11/2026:** Editor Blogger treo khi dán widget ~109k ký tự, **không lưu được** sau vài lần thử. Chuyển JS/CSS sang GitHub Pages `chitrungtran/retro-games/huyencocac/`, trang chỉ còn snippet. Build: `python3 ghpages/build.py`.
 - **12/11/2026:** Trang Xem Hợp Mạng `/p/xem-hop-mang.html` lên sống và vào menu. Worker (logic `worker-v2.js`, version `8074218d…`) thêm mode `hop-mang` (trần 30.000 ký tự / 2500 token) và câu gợi ý sang trang hợp mạng. Test ghi nhận 339/339 đạt. Rate limit đang: 5/10 phút, 20/IP/ngày, 300/ngày toàn trang, reset 0h giờ VN.
+- **16/11/2026:** Dọn việc nội bộ (không deploy, không đổi RATE): `wrangler.toml` trỏ `worker-v2.js`; cập nhật `v2/README.md` và `theme/README.md`; `npm test` chạy đủ bộ test, **339/339 đạt**.
 
 ## Lỗi đã gặp và cách sửa
 
@@ -18,7 +19,7 @@ Mốc theo bộ nhớ công việc và kiểm lại ngày 13/11/2026 (giờ Vi�
 | Trình sửa HTML Blogger (CodeMirror) đơ / không lưu khi dán widget ~109k ký tự | Tách CSS/JS (có bundle iztro) lên GitHub Pages; Blogger chỉ dán snippet vài nghìn ký tự, cache-bust `?v=hash`. |
 | Blogger làm hỏng ký tự non-ASCII trong style/script | Escape `\XXXX` / chỉ ASCII trong khối đó. |
 | Lời luận live sau 12/11 chưa thử được từ IP máy bot (hết 20 lượt/ngày) | Để lịch test 15:00 ngày 17/11/2026; anh có thể thử từ máy/điện thoại khác. Không tự nới hạn mức. |
-| `wrangler.toml` / `v2/README.md` lệch với bản Worker đang chạy | Chưa sửa; ghi vào `TASKS.md` để anh quyết / cập nhật tài liệu nội bộ. |
+| `wrangler.toml` / `v2/README.md` lệch với bản Worker đang chạy | Đã sửa tài liệu/cấu hình local ngày 16/11/2026 (`main = "worker-v2.js"`, README ghi đã deploy 12/11). Không deploy lại. |
 
 ## Bước tiếp
 
@@ -27,4 +28,4 @@ Mốc theo bộ nhớ công việc và kiểm lại ngày 13/11/2026 (giờ Vi�
 3. Chờ quyết về việc ẩn “Được tạo bởi Blogger” / “Báo cáo vi phạm”.
 4. Các lần sửa sau: bám `RULES.md` và checklist trong `TASKS.md`.
 
-Bộ tài liệu này chưa commit/upload; dự kiến nằm ở `huyencocac/docs/` trong repo `chitrungtran/retro-games` (cùng chỗ host asset Pages). Không chứa khóa, token, hay email.
+Bộ tài liệu này đã nằm ở `huyencocac/docs/` trong repo `chitrungtran/retro-games` (cùng chỗ host asset Pages). Không chứa khóa, token, hay email.
