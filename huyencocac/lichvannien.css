@@ -124,18 +124,25 @@ a.hcc-btn:hover{color:#fff}
 .hcc-chu-stars strong{color:var(--gold-soft);font-weight:600}
 .hcc-chu-empty{margin:0;color:var(--muted);font-style:italic}
 .hcc-chu-sun,.hcc-chu-viec-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
-.hcc-chu-viec h4{margin:0 0 6px;font-size:.95rem;color:var(--gold-soft);font-family:"Cormorant SC","Cormorant Garamond",serif;letter-spacing:.04em}
+.hcc-chu-viec h4{margin:0 0 6px;font-size:.95rem;font-family:"Cormorant SC","Cormorant Garamond",serif;letter-spacing:.04em}
 .hcc-chu-viec ul{margin:0;padding-left:1.1em}
 .hcc-chu-sun{gap:8px 16px}
 .hcc-chu-sun div{display:flex;flex-direction:column;gap:2px;font-size:.95rem}
+.hcc-chu-gio-tomtat{display:flex;flex-wrap:wrap;gap:4px 16px;margin:0 0 8px;font-size:.92rem}
+.hcc-chu-gio-tomtat .is-tot,.hcc-chu-viec h4{color:var(--gold-soft)}
+.hcc-chu-gio-tomtat .is-xau{color:var(--muted)}
 .hcc-chu-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:4px}
 .hcc-chu-gio{width:100%;border-collapse:collapse;font-size:.88rem}
 .hcc-chu-gio td,.hcc-chu-gio th{padding:6px 8px;text-align:left;border-bottom:1px solid var(--line-2);white-space:nowrap}
 .hcc-chu-gio th{color:var(--gold-soft);font-weight:600;font-family:"Cormorant SC","Cormorant Garamond",serif;letter-spacing:.04em}
-.hcc-chu-gio tr.is-hoang td:last-child{color:var(--ok)}
-.hcc-chu-gio tr.is-hac td:last-child{color:var(--muted)}
+.hcc-chu-gio tr.is-hoang td{background:rgba(201,164,92,.14);color:var(--ink)}
+.hcc-chu-gio tr.is-hoang td:first-child{box-shadow:inset 3px 0 0 var(--gold)}
+.hcc-chu-gio tr.is-hoang td:last-child{color:var(--gold-soft);font-weight:600}
+.hcc-chu-gio tr.is-hac td{color:var(--muted);background:0 0;opacity:.78}
+.hcc-chu-gio tr.is-hac td:last-child{font-weight:400}
 @media (max-width:560px){.hcc-chu-sun,.hcc-chu-viec-grid{grid-template-columns:1fr}
-.hcc-chu-gio{font-size:.8rem}
-.hcc-chu-gio td,.hcc-chu-gio th{padding:5px 6px}
+.hcc-chu-gio{font-size:.75rem}
+.hcc-chu-gio td,.hcc-chu-gio th{padding:5px 4px;white-space:normal}
+.hcc-chu-gio-tomtat{flex-direction:column;gap:2px}
 }
 .hcc-hidden{display:none!important}
