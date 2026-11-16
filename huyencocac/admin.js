@@ -45,7 +45,10 @@
       '.hcca td.n{text-align:right}',
       '.hcca tr.hcca-row{cursor:pointer}.hcca tr.hcca-row:hover td{background:rgba(201,164,92,.08)}',
       '.hcca-tag{font-size:.8rem;color:var(--muted)}',
-      '.hcca-hidden{display:none!important}'
+      '.hcca-hidden{display:none!important}',
+      '.hcca-gbtn{display:flex;justify-content:center;align-items:center;box-sizing:border-box;width:100%;max-width:320px;margin:0 auto;overflow:hidden;line-height:0;color-scheme:dark;border:0;box-shadow:inset 0 0 0 1px var(--gold,#c9a45c);border-radius:999px;background:#131314}',
+      '.hcca-gbtn:empty,.hcca-gbtn[style*="display: none"]{display:none!important;border:0}',
+      '.hcca-gbtn>div,.hcca-gbtn iframe{display:block;max-width:100%!important;margin:0 auto!important}'
     ].join('\n');
     doc.head.appendChild(css);
 
@@ -54,7 +57,7 @@
     root.appendChild(el('h1', null, 'Quản lý lượt luận'));
     root.appendChild(el('p', 'hcca-sub', 'Huyền Cơ Các · khách 2 lượt, tài khoản Google 5 lượt, quản trị không giới hạn'));
     var bar = el('div', 'hcca-bar');
-    var btnHost = el('div');
+    var btnHost = el('div', 'hcca-gbtn');
     var who = el('span', 'hcca-tag');
     bar.appendChild(btnHost); bar.appendChild(who);
     root.appendChild(bar);
@@ -259,6 +262,46 @@
       loadUsers();
     }
 
+    function buttonWidth() {
+      var avail = 0;
+      if (bar && bar.clientWidth) avail = bar.clientWidth;
+      if (avail < 80 && root.clientWidth) avail = root.clientWidth - 16;
+      if (avail < 80) avail = 280;
+      if (avail > 320) avail = 320;
+      if (avail < 200) avail = Math.max(Math.floor(avail), 1);
+      return Math.floor(avail);
+    }
+    function renderGsiButton(force) {
+      if (!state.gsiReady || !state.clientId) return;
+      if (btnHost.style.display === 'none') return;
+      var w = buttonWidth();
+      if (!force && btnHost.getAttribute('data-done') && btnHost.getAttribute('data-w') === String(w)) return;
+      btnHost.textContent = '';
+      try {
+        google.accounts.id.renderButton(btnHost, {
+          type: 'standard',
+          theme: 'filled_black',
+          size: 'large',
+          text: 'signin_with',
+          shape: 'pill',
+          locale: 'vi',
+          width: w
+        });
+        btnHost.setAttribute('data-done', '1');
+        btnHost.setAttribute('data-w', String(w));
+      } catch (e) {}
+    }
+    var resizeTimer = null;
+    function onAdminResize() {
+      if (btnHost.style.display === 'none') return;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () { renderGsiButton(); }, 150);
+    }
+    if (typeof ResizeObserver !== 'undefined') {
+      try { new ResizeObserver(onAdminResize).observe(root); } catch (e) {}
+    }
+    if (doc.defaultView) doc.defaultView.addEventListener('resize', onAdminResize);
+
     function initGsi() {
       var s = doc.createElement('script');
       s.src = 'https://accounts.google.com/gsi/client';
@@ -266,8 +309,8 @@
       s.onload = function () {
         try {
           google.accounts.id.initialize({ client_id: state.clientId, callback: onCredential, auto_select: true, use_fedcm_for_prompt: true });
-          google.accounts.id.renderButton(btnHost, { type: 'standard', theme: 'filled_black', size: 'large', text: 'signin_with', shape: 'pill', locale: 'vi' });
           state.gsiReady = true;
+          renderGsiButton(true);
           if (!tokenValid()) google.accounts.id.prompt();
         } catch (e) { setMsg(topMsg, 'Không tải được nút Đăng nhập Google.', 'err'); }
       };
