@@ -180,7 +180,10 @@ body,html{margin:0!important;color-scheme:light!important}
 .hcc-hop th{color:var(--gold-soft);font-weight:600;background:rgba(201,164,92,.08);width:34%}
 .hcc-hop .hcc-ok{color:var(--ok)}
 .hcc-hop .hcc-bad{color:var(--danger)}
-@media print{.hcc-hop td,.hcc-hop th{color:#111!important;border-color:#444!important;background:#fff!important}
+.hcc-phuthe-notice{margin:6px auto 12px;padding:10px 12px;border:1px solid var(--line, rgba(201,164,92,.32));border-radius:8px;color:var(--muted, #c2b08b);font-size:.92rem;line-height:1.55;text-align:left;background:rgba(20,14,10,.35)}
+.hcc-btn.hcc-blocked[disabled]{cursor:not-allowed}
+@media print{.hcc-phuthe-notice{display:none!important}
+.hcc-hop td,.hcc-hop th{color:#111!important;border-color:#444!important;background:#fff!important}
 .hcc-hop .hcc-bad,.hcc-hop .hcc-ok{color:#111!important}
 }
 .hcc-hidden{display:none!important}
