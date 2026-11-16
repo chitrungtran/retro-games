@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -21,6 +20,25 @@
             text-align: center;
             font-size: 2em;
             font-weight: bold;
+        }
+
+        .header-sub {
+            background-color: #ff0000;
+            color: white;
+            text-align: center;
+            padding: 0 20px 16px;
+            font-size: 1em;
+            font-weight: normal;
+        }
+
+        .header-sub a {
+            color: #fff;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .header-sub a:hover {
+            color: #ffe0e0;
         }
 
         .search-bar {
@@ -90,7 +108,7 @@
         .game-button:hover {
             background-color: #004ac9;
         }
-        
+
         /* CSS cho danh sách game (không thay đổi nhiều) */
         .game-list-container {
             padding: 20px;
@@ -123,6 +141,31 @@
             border-bottom: none;
         }
 
+        li.group-label {
+            font-size: 0.95em;
+            font-weight: bold;
+            color: #555;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            border-bottom: 2px solid #0064ff;
+            padding-top: 20px;
+        }
+
+        li.group-label:first-child {
+            padding-top: 4px;
+        }
+
+        .game-meta {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.8em;
+            font-weight: normal;
+        }
+
+        .game-meta a {
+            font-weight: normal;
+        }
+
         a {
             text-decoration: none;
             color: #0000ff;
@@ -147,47 +190,148 @@
     <div class="header">
         Collection of old retro games.
     </div>
+    <div class="header-sub">
+        Blog: <a href="https://8bitstory.blogspot.com">8bitstory.blogspot.com</a>
+    </div>
 
     <div class="search-bar">
-        <input type="text" placeholder="Search for games...">
+        <input type="text" id="game-search" placeholder="Search for games..." autocomplete="off">
     </div>
 
     <div id="game-display-area-wrapper" class="game-display-area">
+        <div id="asterix-obelix-game" class="game-container" style="display:none;">
+            <iframe class="game-frame" src="Snes/Asterix%20%26%20Obelix%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%29/Asterix%20%26%20Obelix%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%29.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <div class="game-controls">
+                <button class="game-button" onclick="requestFullscreen('asterix-obelix-game')">Full Màn Hình! 🌟</button>
+                <button class="game-button" onclick="hideGame('asterix-obelix-game')">Ẩn Game ❌</button>
+            </div>
+        </div>
         <div id="final-fight-game" class="game-container" style="display:none;">
-            <iframe class="game-frame" src="Snes/Final%20Fight%20(USA)/Final%20Fight%20(USA).html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <iframe class="game-frame" src="Snes/Final%20Fight%20%28USA%29/Final%20Fight%20%28USA%29.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
             <div class="game-controls">
                 <button class="game-button" onclick="requestFullscreen('final-fight-game')">Full Màn Hình! 🌟</button>
                 <button class="game-button" onclick="hideGame('final-fight-game')">Ẩn Game ❌</button>
             </div>
         </div>
-
+        <div id="final-fight-2-game" class="game-container" style="display:none;">
+            <iframe class="game-frame" src="Snes/Final%20Fight%202%20%28USA%29/Final%20Fight%202%20%28USA%29.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <div class="game-controls">
+                <button class="game-button" onclick="requestFullscreen('final-fight-2-game')">Full Màn Hình! 🌟</button>
+                <button class="game-button" onclick="hideGame('final-fight-2-game')">Ẩn Game ❌</button>
+            </div>
+        </div>
+        <div id="final-fight-3-game" class="game-container" style="display:none;">
+            <iframe class="game-frame" src="Snes/Final%20Fight%203%20%28USA%29/Final%20Fight%203%20%28USA%29.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <div class="game-controls">
+                <button class="game-button" onclick="requestFullscreen('final-fight-3-game')">Full Màn Hình! 🌟</button>
+                <button class="game-button" onclick="hideGame('final-fight-3-game')">Ẩn Game ❌</button>
+            </div>
+        </div>
+        <div id="final-fight-guy-game" class="game-container" style="display:none;">
+            <iframe class="game-frame" src="Snes/Final%20Fight%20Guy%20%28USA%29/Final%20Fight%20Guy%20%28USA%29.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <div class="game-controls">
+                <button class="game-button" onclick="requestFullscreen('final-fight-guy-game')">Full Màn Hình! 🌟</button>
+                <button class="game-button" onclick="hideGame('final-fight-guy-game')">Ẩn Game ❌</button>
+            </div>
+        </div>
+        <div id="ghost-chaser-densei-game" class="game-container" style="display:none;">
+            <iframe class="game-frame" src="Snes/Ghost%20Chaser%20Densei%20%28English%20v1.0%29/Ghost%20Chaser%20Densei%20%28English%20v1.0%29.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <div class="game-controls">
+                <button class="game-button" onclick="requestFullscreen('ghost-chaser-densei-game')">Full Màn Hình! 🌟</button>
+                <button class="game-button" onclick="hideGame('ghost-chaser-densei-game')">Ẩn Game ❌</button>
+            </div>
+        </div>
+        <div id="marvel-war-of-the-gems-game" class="game-container" style="display:none;">
+            <iframe class="game-frame" src="Snes/Marvel%20Super%20Heroes%20in%20War%20of%20the%20Gems%20%28USA%29/Marvel%20Super%20Heroes%20in%20War%20of%20the%20Gems%20%28USA%29.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <div class="game-controls">
+                <button class="game-button" onclick="requestFullscreen('marvel-war-of-the-gems-game')">Full Màn Hình! 🌟</button>
+                <button class="game-button" onclick="hideGame('marvel-war-of-the-gems-game')">Ẩn Game ❌</button>
+            </div>
+        </div>
         <div id="super-bomberman-3-game" class="game-container" style="display:none;">
-            <iframe class="game-frame" src="Snes/Super%20Bomberman%203%20(Europe)/Super%20Bomberman%203%20(Europe).html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <iframe class="game-frame" src="Snes/Super%20Bomberman%203%20%28Europe%29/Super%20Bomberman%203%20%28Europe%29.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
             <div class="game-controls">
                 <button class="game-button" onclick="requestFullscreen('super-bomberman-3-game')">Full Màn Hình! 🌟</button>
                 <button class="game-button" onclick="hideGame('super-bomberman-3-game')">Ẩn Game ❌</button>
             </div>
         </div>
-
-        <div id="another-game-game" class="game-container" style="display:none;">
-            <iframe class="game-frame" src="Snes/Another%20Game/Another%20Game.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+        <div id="super-bomberman-4-game" class="game-container" style="display:none;">
+            <iframe class="game-frame" src="Snes/Super%20Bomberman%204%20%28English%20v1.0%29/Super%20Bomberman%204%20%28English%20v1.0%29.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
             <div class="game-controls">
-                <button class="game-button" onclick="requestFullscreen('another-game-game')">Full Màn Hình! 🌟</button>
-                <button class="game-button" onclick="hideGame('another-game-game')">Ẩn Game ❌</button>
+                <button class="game-button" onclick="requestFullscreen('super-bomberman-4-game')">Full Màn Hình! 🌟</button>
+                <button class="game-button" onclick="hideGame('super-bomberman-4-game')">Ẩn Game ❌</button>
+            </div>
+        </div>
+        <div id="tmnt-iv-game" class="game-container" style="display:none;">
+            <iframe class="game-frame" src="Snes/Teenage%20Mutant%20Ninja%20Turtles%20IV%20-%20Turtles%20in%20Time%20%28USA%29/Teenage%20Mutant%20Ninja%20Turtles%20IV%20-%20Turtles%20in%20Time%20%28USA%29.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <div class="game-controls">
+                <button class="game-button" onclick="requestFullscreen('tmnt-iv-game')">Full Màn Hình! 🌟</button>
+                <button class="game-button" onclick="hideGame('tmnt-iv-game')">Ẩn Game ❌</button>
+            </div>
+        </div>
+        <div id="three-wonders-game" class="game-container" style="display:none;">
+            <iframe class="game-frame" src="mame/3wonders/3wonders.html" allowfullscreen="true" allow="autoplay; fullscreen"></iframe>
+            <div class="game-controls">
+                <button class="game-button" onclick="requestFullscreen('three-wonders-game')">Full Màn Hình! 🌟</button>
+                <button class="game-button" onclick="hideGame('three-wonders-game')">Ẩn Game ❌</button>
             </div>
         </div>
     </div>
     <div class="game-list-container">
         <h2>list game</h2>
         <ul>
-            <li><a href="#final-fight-game">Final Fight (SNES) 👊</a></li>
-            <li><a href="#super-bomberman-3-game">Super Bomberman 3 (Europe) 💣</a></li>
-            <li><a href="#another-game-game">Tên Game Khác Của Mày ✨</a></li>
-            </ul>
+            <li class="group-label">SNES</li>
+            <li class="game-item" data-title="asterix & obelix (europe)">
+                <a href="#asterix-obelix-game">Asterix & Obelix (Europe)</a>
+                <span class="game-meta"><a href="Snes/Asterix%20%26%20Obelix%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%29/Asterix%20%26%20Obelix%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%29.html" target="_blank" rel="noopener">Trang chơi</a> · <a href="https://8bitstory.blogspot.com/2026/11/asterix-obelix-europe-enfrdees.html" target="_blank" rel="noopener">Bài viết</a></span>
+            </li>
+            <li class="game-item" data-title="final fight (usa)">
+                <a href="#final-fight-game">Final Fight (USA)</a>
+                <span class="game-meta"><a href="Snes/Final%20Fight%20%28USA%29/Final%20Fight%20%28USA%29.html" target="_blank" rel="noopener">Trang chơi</a> · <a href="https://8bitstory.blogspot.com/2025/05/final-fight-usa.html" target="_blank" rel="noopener">Bài viết</a></span>
+            </li>
+            <li class="game-item" data-title="final fight 2 (usa)">
+                <a href="#final-fight-2-game">Final Fight 2 (USA)</a>
+                <span class="game-meta"><a href="Snes/Final%20Fight%202%20%28USA%29/Final%20Fight%202%20%28USA%29.html" target="_blank" rel="noopener">Trang chơi</a> · <a href="https://8bitstory.blogspot.com/2026/11/final-fight-2-usa.html" target="_blank" rel="noopener">Bài viết</a></span>
+            </li>
+            <li class="game-item" data-title="final fight 3 (usa)">
+                <a href="#final-fight-3-game">Final Fight 3 (USA)</a>
+                <span class="game-meta"><a href="Snes/Final%20Fight%203%20%28USA%29/Final%20Fight%203%20%28USA%29.html" target="_blank" rel="noopener">Trang chơi</a> · <a href="https://8bitstory.blogspot.com/2026/11/final-fight-3-usa.html" target="_blank" rel="noopener">Bài viết</a></span>
+            </li>
+            <li class="game-item" data-title="final fight guy (usa)">
+                <a href="#final-fight-guy-game">Final Fight Guy (USA)</a>
+                <span class="game-meta"><a href="Snes/Final%20Fight%20Guy%20%28USA%29/Final%20Fight%20Guy%20%28USA%29.html" target="_blank" rel="noopener">Trang chơi</a> · <a href="https://8bitstory.blogspot.com/2026/11/final-fight-guy-usa.html" target="_blank" rel="noopener">Bài viết</a></span>
+            </li>
+            <li class="game-item" data-title="ghost chaser densei (english v1.0)">
+                <a href="#ghost-chaser-densei-game">Ghost Chaser Densei (English v1.0)</a>
+                <span class="game-meta"><a href="Snes/Ghost%20Chaser%20Densei%20%28English%20v1.0%29/Ghost%20Chaser%20Densei%20%28English%20v1.0%29.html" target="_blank" rel="noopener">Trang chơi</a> · <a href="https://8bitstory.blogspot.com/2026/11/ghost-chaser-densei-english-v10.html" target="_blank" rel="noopener">Bài viết</a></span>
+            </li>
+            <li class="game-item" data-title="marvel super heroes in war of the gems (usa)">
+                <a href="#marvel-war-of-the-gems-game">Marvel Super Heroes in War of the Gems (USA)</a>
+                <span class="game-meta"><a href="Snes/Marvel%20Super%20Heroes%20in%20War%20of%20the%20Gems%20%28USA%29/Marvel%20Super%20Heroes%20in%20War%20of%20the%20Gems%20%28USA%29.html" target="_blank" rel="noopener">Trang chơi</a> · <a href="https://8bitstory.blogspot.com/2026/11/marvel-super-heroes-in-war-of-gems-usa.html" target="_blank" rel="noopener">Bài viết</a></span>
+            </li>
+            <li class="game-item" data-title="super bomberman 3 (europe)">
+                <a href="#super-bomberman-3-game">Super Bomberman 3 (Europe)</a>
+                <span class="game-meta"><a href="Snes/Super%20Bomberman%203%20%28Europe%29/Super%20Bomberman%203%20%28Europe%29.html" target="_blank" rel="noopener">Trang chơi</a> · <a href="https://8bitstory.blogspot.com/2025/05/super-bomberman-3-english.html" target="_blank" rel="noopener">Bài viết</a></span>
+            </li>
+            <li class="game-item" data-title="super bomberman 4 (english v1.0)">
+                <a href="#super-bomberman-4-game">Super Bomberman 4 (English v1.0)</a>
+                <span class="game-meta"><a href="Snes/Super%20Bomberman%204%20%28English%20v1.0%29/Super%20Bomberman%204%20%28English%20v1.0%29.html" target="_blank" rel="noopener">Trang chơi</a> · <a href="https://8bitstory.blogspot.com/2026/08/super-bomberman-4-english-v10.html" target="_blank" rel="noopener">Bài viết</a></span>
+            </li>
+            <li class="game-item" data-title="teenage mutant ninja turtles iv - turtles in time (usa)">
+                <a href="#tmnt-iv-game">Teenage Mutant Ninja Turtles IV - Turtles in Time (USA)</a>
+                <span class="game-meta"><a href="Snes/Teenage%20Mutant%20Ninja%20Turtles%20IV%20-%20Turtles%20in%20Time%20%28USA%29/Teenage%20Mutant%20Ninja%20Turtles%20IV%20-%20Turtles%20in%20Time%20%28USA%29.html" target="_blank" rel="noopener">Trang chơi</a> · <a href="https://8bitstory.blogspot.com/2026/11/teenage-mutant-ninja-turtles-iv-turtles.html" target="_blank" rel="noopener">Bài viết</a></span>
+            </li>
+            <li class="group-label">Arcade</li>
+            <li class="game-item" data-title="three wonders (arcade, 1991)">
+                <a href="#three-wonders-game">Three Wonders (Arcade, 1991)</a>
+                <span class="game-meta"><a href="mame/3wonders/3wonders.html" target="_blank" rel="noopener">Trang chơi</a></span>
+            </li>
+        </ul>
     </div>
 
     <footer>
-        <p>&copy; 2025 Bộ Sưu Tập Game Retro Của Trung. Vui vẻ nhé! 🎉</p>
+        <p>&copy; 2026 Bộ Sưu Tập Game Retro Của Trung. Vui vẻ nhé! 🎉</p>
+        <p><a href="https://8bitstory.blogspot.com">8bitstory.blogspot.com</a></p>
     </footer>
 
     <script>
@@ -206,7 +350,7 @@
                         iframe.setAttribute('data-original-src', iframe.src);
                     }
                     // Reset src về about:blank để dừng game và giải phóng tài nguyên
-                    iframe.src = 'about:blank'; 
+                    iframe.src = 'about:blank';
                 }
             });
 
@@ -272,14 +416,25 @@
                 }
             });
 
-            // Gắn sự kiện click cho các link trong danh sách game
-            document.querySelectorAll('.game-list-container a').forEach(link => {
+            // Gắn sự kiện click cho các link trong danh sách game (chỉ link tên game, không phải Trang chơi / Bài viết)
+            document.querySelectorAll('.game-list-container li.game-item > a').forEach(link => {
                 link.addEventListener('click', function(event) {
                     event.preventDefault(); // Ngăn chặn hành vi mặc định của link
                     const targetDivId = this.getAttribute('href').substring(1); // Lấy id của div game
                     displayGame(targetDivId);
                 });
             });
+
+            const searchInput = document.getElementById('game-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const q = this.value.trim().toLowerCase();
+                    document.querySelectorAll('.game-list-container li.game-item').forEach(li => {
+                        const title = li.getAttribute('data-title') || li.textContent.toLowerCase();
+                        li.style.display = (!q || title.indexOf(q) !== -1) ? '' : 'none';
+                    });
+                });
+            }
         });
     </script>
 </body>
