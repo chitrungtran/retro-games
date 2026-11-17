@@ -1,5 +1,5 @@
 /**
- * Huyền Cơ Các — trang quản lý lượt luận.
+ * Huyền Cơ Các — trang quản lý lượt luận + thống kê chi phí DeepSeek (17/11/2026).
  * Dùng được ở https://chitrungtran.github.io/retro-games/huyencocac/admin.html
  * hoặc nhúng vào một trang Blogger bằng ghpages/admin-snippet.html (chỉ cần <div id="hcc-admin"> + thẻ script này).
  * Chỉ email trong ADMIN_EMAILS của Worker mới xem được; người khác thấy "Bạn không có quyền."
@@ -48,7 +48,28 @@
       '.hcca-hidden{display:none!important}',
       '.hcca-gbtn{display:flex;justify-content:center;align-items:center;box-sizing:border-box;width:100%;max-width:320px;margin:0 auto;overflow:hidden;line-height:0;color-scheme:dark;border:0;box-shadow:inset 0 0 0 1px var(--gold,#c9a45c);border-radius:999px;background:#131314}',
       '.hcca-gbtn:empty,.hcca-gbtn[style*="display: none"]{display:none!important;border:0}',
-      '.hcca-gbtn>div,.hcca-gbtn iframe{display:block;max-width:100%!important;margin:0 auto!important}'
+      '.hcca-gbtn>div,.hcca-gbtn iframe{display:block;max-width:100%!important;margin:0 auto!important}',
+      '.hcca input[type=date]{background:#130e0a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 10px;font:inherit;color-scheme:dark;min-width:0}',
+      '.hcca-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:6px 0 12px}',
+      '.hcca-card{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:rgba(201,164,92,.06)}',
+      '.hcca-card .k{color:var(--muted);font-size:.85rem}',
+      '.hcca-card .v{color:var(--gold);font-size:1.45rem;font-weight:600;line-height:1.25;margin:2px 0}',
+      '.hcca-card .s{color:var(--muted);font-size:.8rem}',
+      '.hcca-card.warn{border-color:var(--danger);background:rgba(168,50,43,.18)}',
+      '.hcca-card.warn .v{color:var(--danger)}',
+      '.hcca-card.okc .v{color:var(--ok)}',
+      '.hcca-bar-track{height:6px;border-radius:3px;background:rgba(201,164,92,.15);margin-top:6px;overflow:hidden}',
+      '.hcca-bar-fill{height:100%;background:var(--gold);border-radius:3px}',
+      '.hcca-card.warn .hcca-bar-fill{background:var(--danger)}',
+      '.hcca h3{font-family:"Cormorant SC",serif;color:var(--gold);margin:14px 0 6px;font-size:1.1rem}',
+      '.hcca tr.hcca-sum td{font-weight:600;color:var(--gold);border-top:1px solid var(--gold)}',
+      '.hcca tr.hcca-zero td{color:var(--muted);opacity:.7}',
+      '.hcca-grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 14px;align-items:end}',
+      '.hcca-grid2 label{display:flex;flex-direction:column;gap:4px;color:var(--muted);font-size:.9rem}',
+      '.hcca-grid2 input{width:100%;box-sizing:border-box}',
+      '.hcca-note{color:var(--muted);font-size:.82rem;margin-top:8px;line-height:1.5}',
+      '.hcca-note a{color:var(--gold)}',
+      '@media (max-width:560px){.hcca h1{font-size:1.6rem}.hcca-card .v{font-size:1.25rem}.hcca th,.hcca td{padding:5px 6px;font-size:.86rem}}'
     ].join('\n');
     doc.head.appendChild(css);
 
@@ -69,6 +90,63 @@
 
     var main = el('div', 'hcca-hidden');
     root.appendChild(main);
+
+    // Thống kê & chi phí DeepSeek
+    var statP = el('div', 'hcca-panel');
+    statP.appendChild(el('h2', null, 'Thống kê & chi phí'));
+    var sbar = el('div', 'hcca-form');
+    var sReload = el('button', null, 'Tải lại thống kê'); sReload.type = 'button';
+    var sStamp = el('span', 'hcca-tag');
+    sbar.appendChild(sReload); sbar.appendChild(sStamp);
+    statP.appendChild(sbar);
+    var sMsg = el('div', 'hcca-msg');
+    statP.appendChild(sMsg);
+    var cards = el('div', 'hcca-cards');
+    statP.appendChild(cards);
+
+    statP.appendChild(el('h3', null, 'Theo tính năng'));
+    var fWrap = el('div', 'hcca-tablewrap');
+    var fTable = el('table');
+    var fHead = el('thead'); var fhr = el('tr');
+    ['Tính năng', 'Hôm nay', 'Chi phí hôm nay', '30 ngày', 'Token 30 ngày', 'Chi phí 30 ngày'].forEach(function (h, i) { fhr.appendChild(el('th', i ? 'n' : null, h)); });
+    fHead.appendChild(fhr);
+    var fBody = el('tbody');
+    fTable.appendChild(fHead); fTable.appendChild(fBody); fWrap.appendChild(fTable);
+    statP.appendChild(fWrap);
+
+    statP.appendChild(el('h3', null, '30 ngày gần nhất'));
+    var dWrap = el('div', 'hcca-tablewrap');
+    var dTable = el('table');
+    var dHead = el('thead'); var dhr = el('tr');
+    ['Ngày', 'Lượt', 'Token vào', 'Token ra', 'Chi phí ước tính'].forEach(function (h, i) { dhr.appendChild(el('th', i ? 'n' : null, h)); });
+    dHead.appendChild(dhr);
+    var dBody = el('tbody');
+    dTable.appendChild(dHead); dTable.appendChild(dBody); dWrap.appendChild(dTable);
+    statP.appendChild(dWrap);
+
+    statP.appendChild(el('h3', null, 'Trần mỗi ngày & tiền nạp'));
+    var cf = el('form');
+    cf.setAttribute('novalidate', '');
+    var cGrid = el('div', 'hcca-grid2');
+    function field(labelText, input) { var l = el('label'); l.appendChild(doc.createTextNode(labelText)); l.appendChild(input); cGrid.appendChild(l); return input; }
+    var cReadings = el('input'); cReadings.type = 'number'; cReadings.min = '0'; cReadings.step = '1'; cReadings.inputMode = 'numeric';
+    var cCost = el('input'); cCost.type = 'number'; cCost.min = '0'; cCost.step = '0.01'; cCost.inputMode = 'decimal';
+    var cCredit = el('input'); cCredit.type = 'number'; cCredit.min = '0'; cCredit.step = '0.01'; cCredit.inputMode = 'decimal';
+    var cStart = el('input'); cStart.type = 'date';
+    field('Trần lượt luận mỗi ngày (0 = không giới hạn)', cReadings);
+    field('Trần chi phí mỗi ngày, USD (0 = không giới hạn)', cCost);
+    field('Số tiền đã nạp DeepSeek, USD', cCredit);
+    field('Tính chi phí từ ngày (ngày nạp tiền)', cStart);
+    var cBtn = el('button', null, 'Lưu cài đặt'); cBtn.type = 'submit';
+    var cBtnWrap = el('label'); cBtnWrap.appendChild(cBtn);
+    cGrid.appendChild(cBtnWrap);
+    cf.appendChild(cGrid);
+    statP.appendChild(cf);
+    var cMsg = el('div', 'hcca-msg');
+    statP.appendChild(cMsg);
+    var priceNote = el('div', 'hcca-note');
+    statP.appendChild(priceNote);
+    main.appendChild(statP);
 
     // Form cộng lượt
     var grantP = el('div', 'hcca-panel');
@@ -149,6 +227,140 @@
     }
     search.addEventListener('input', renderTable);
 
+    /* ---------- Thống kê ---------- */
+    var NF = (function () { try { return new Intl.NumberFormat('vi-VN'); } catch (e) { return null; } })();
+    function fmtInt(n) { n = Math.round(Number(n) || 0); return NF ? NF.format(n) : String(n); }
+    function fmtUsd(x) {
+      x = Number(x) || 0;
+      var a = Math.abs(x);
+      var d = a === 0 ? 2 : (a < 0.01 ? 4 : (a < 1 ? 3 : 2));
+      return (x < 0 ? '-' : '') + '$' + a.toFixed(d);
+    }
+    function fmtDate(iso) {
+      if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso || '';
+      return iso.slice(8, 10) + '/' + iso.slice(5, 7) + '/' + iso.slice(0, 4);
+    }
+    var FEATURE_NAMES = { tuvi: 'Xem Tử Vi', hopmang: 'Xem Hợp Mạng', other: 'Khác' };
+    var LOW_CREDIT_USD = 2;
+
+    function card(label, value, sub, kind, pct) {
+      var c = el('div', 'hcca-card' + (kind ? ' ' + kind : ''));
+      c.appendChild(el('div', 'k', label));
+      c.appendChild(el('div', 'v', value));
+      if (sub) c.appendChild(el('div', 's', sub));
+      if (pct != null) {
+        var t = el('div', 'hcca-bar-track'); var f = el('div', 'hcca-bar-fill');
+        f.style.width = Math.max(0, Math.min(100, pct)) + '%';
+        t.appendChild(f); c.appendChild(t);
+      }
+      cards.appendChild(c);
+      return c;
+    }
+
+    function renderStats(d) {
+      var t = d.today || {}; var st = d.settings || {}; var cr = d.credit || {}; var tot = d.totals || {};
+      cards.innerHTML = '';
+      var capN = st.dailyReadings > 0 ? st.dailyReadings : 0;
+      card('Lượt luận hôm nay', fmtInt(t.n) + (capN ? ' / ' + fmtInt(capN) : ''),
+        capN ? (d.cap && d.cap.reached ? 'Đã chạm trần, khách sẽ được mời quay lại ngày mai' : 'Còn ' + fmtInt(d.cap ? d.cap.readingsLeft : capN - t.n) + ' lượt trước khi chạm trần') : 'Không đặt trần lượt',
+        d.cap && d.cap.reached ? 'warn' : '', capN ? (t.n / capN) * 100 : null);
+      card('Chi phí hôm nay', fmtUsd(t.cost),
+        (st.dailyCostUsd > 0 ? 'Trần ' + fmtUsd(st.dailyCostUsd) + ' · ' : '') + 'Token vào ' + fmtInt(t.pin) + ' · ra ' + fmtInt(t.pout),
+        st.dailyCostUsd > 0 && t.cost >= st.dailyCostUsd ? 'warn' : '', st.dailyCostUsd > 0 ? (t.cost / st.dailyCostUsd) * 100 : null);
+      var rem = Number(cr.remainingUsd) || 0;
+      var low = rem < LOW_CREDIT_USD;
+      card('Tiền còn lại (ước tính)', fmtUsd(rem),
+        'Nạp ' + fmtUsd(cr.creditUsd) + ', đã dùng ' + fmtUsd(cr.spentUsd) + (cr.creditStart ? ' từ ' + fmtDate(cr.creditStart) : ' (chưa đặt ngày bắt đầu)') + (low ? (rem <= 0 ? '. Có thể đã hết tiền, nên nạp thêm ngay!' : '. Sắp hết tiền, nên nạp thêm!') : ''),
+        low ? 'warn' : 'okc', cr.creditUsd > 0 ? (rem / cr.creditUsd) * 100 : null);
+      var perReading = Number(cr.avgCostPerReading) || 0;
+      var perDay = Number(cr.avgCostPerActiveDay) || 0;
+      var daysLeft = perDay > 0 ? Math.floor(Math.max(0, rem) / perDay) : null;
+      card('30 ngày qua', fmtInt(tot.n) + ' lượt', 'Chi phí ' + fmtUsd(tot.cost) + ' · trung bình ' + fmtUsd(perReading) + '/lượt' + (daysLeft != null ? ' · đủ khoảng ' + fmtInt(daysLeft) + ' ngày nữa' : ''));
+
+      fBody.innerHTML = '';
+      ['tuvi', 'hopmang', 'other'].forEach(function (k) {
+        var a = (t.f && t.f[k]) || {}; var b = (tot.f && tot.f[k]) || {};
+        var tr = el('tr', (a.n || b.n) ? null : 'hcca-zero');
+        tr.appendChild(el('td', null, FEATURE_NAMES[k]));
+        tr.appendChild(el('td', 'n', fmtInt(a.n)));
+        tr.appendChild(el('td', 'n', fmtUsd(a.cost)));
+        tr.appendChild(el('td', 'n', fmtInt(b.n)));
+        tr.appendChild(el('td', 'n', fmtInt((b.pin || 0) + (b.pout || 0))));
+        tr.appendChild(el('td', 'n', fmtUsd(b.cost)));
+        fBody.appendChild(tr);
+      });
+
+      dBody.innerHTML = '';
+      (d.days || []).forEach(function (r) {
+        var tr = el('tr', r.n ? null : 'hcca-zero');
+        tr.appendChild(el('td', null, fmtDate(r.date) + (r.date === t.date ? ' (hôm nay)' : '')));
+        tr.appendChild(el('td', 'n', fmtInt(r.n)));
+        tr.appendChild(el('td', 'n', fmtInt(r.pin)));
+        tr.appendChild(el('td', 'n', fmtInt(r.pout)));
+        tr.appendChild(el('td', 'n', fmtUsd(r.cost)));
+        dBody.appendChild(tr);
+      });
+      var sum = el('tr', 'hcca-sum');
+      sum.appendChild(el('td', null, 'Cộng ' + (d.days || []).length + ' ngày'));
+      sum.appendChild(el('td', 'n', fmtInt(tot.n)));
+      sum.appendChild(el('td', 'n', fmtInt(tot.pin)));
+      sum.appendChild(el('td', 'n', fmtInt(tot.pout)));
+      sum.appendChild(el('td', 'n', fmtUsd(tot.cost)));
+      dBody.appendChild(sum);
+
+      if (doc.activeElement !== cReadings) cReadings.value = st.dailyReadings != null ? String(st.dailyReadings) : '';
+      if (doc.activeElement !== cCost) cCost.value = st.dailyCostUsd != null ? String(st.dailyCostUsd) : '';
+      if (doc.activeElement !== cCredit) cCredit.value = st.creditUsd != null ? String(st.creditUsd) : '';
+      if (doc.activeElement !== cStart) cStart.value = st.creditStart || '';
+
+      var p = d.prices || {};
+      priceNote.textContent = '';
+      var pk = p.peakPerM || {}; var op = p.offPeakPerM || {};
+      priceNote.appendChild(doc.createTextNode(
+        'Chi phí là ước tính theo bảng giá DeepSeek (model ' + (p.model || 'deepseek-chat') + ', USD / 1 triệu token): ngoài giờ cao điểm vào ' + op.cacheMiss + ' (cache ' + op.cacheHit + '), ra ' + op.output +
+        '; giờ cao điểm (8–11 giờ và 13–17 giờ, giờ VN, thứ Hai–Sáu) gấp đôi. Nguồn: '));
+      var a1 = el('a', null, 'bảng giá DeepSeek'); a1.href = p.source || 'https://api-docs.deepseek.com/quick_start/pricing'; a1.target = '_blank'; a1.rel = 'noopener';
+      priceNote.appendChild(a1);
+      priceNote.appendChild(doc.createTextNode('. Số dư thật xem ở '));
+      var a2 = el('a', null, 'platform.deepseek.com'); a2.href = 'https://platform.deepseek.com/usage'; a2.target = '_blank'; a2.rel = 'noopener';
+      priceNote.appendChild(a2);
+      priceNote.appendChild(doc.createTextNode('. Khi chạm trần ngày, khách thấy: "Hôm nay Huyền Cơ Các đã hết lượt luận chung, mời quý khách quay lại ngày mai." Tài khoản quản trị không bị chặn.'));
+      sStamp.textContent = 'Cập nhật lúc ' + fmtTime(Date.now());
+    }
+
+    function loadStats() {
+      if (!tokenValid()) return;
+      sReload.disabled = true;
+      setMsg(sMsg, 'Đang tải thống kê...');
+      api('GET', '/api/admin/stats?days=30').then(function (out) {
+        sReload.disabled = false;
+        if (handleAuthFail(out)) return;
+        if (out.status !== 200) { setMsg(sMsg, out.data.error || 'Không tải được thống kê.', 'err'); return; }
+        setMsg(sMsg, '');
+        renderStats(out.data);
+      }).catch(function () { sReload.disabled = false; setMsg(sMsg, 'Không kết nối được máy chủ.', 'err'); });
+    }
+    sReload.addEventListener('click', loadStats);
+
+    cf.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var nR = cReadings.value === '' ? 0 : Number(cReadings.value);
+      var nC = cCost.value === '' ? 0 : Number(cCost.value);
+      var nK = cCredit.value === '' ? 0 : Number(cCredit.value);
+      if (!(nR >= 0 && Math.floor(nR) === nR && nR <= 100000)) { setMsg(cMsg, 'Trần lượt phải là số nguyên từ 0 đến 100000.', 'err'); return; }
+      if (!(nC >= 0 && nC <= 10000)) { setMsg(cMsg, 'Trần chi phí phải từ 0 đến 10000 USD.', 'err'); return; }
+      if (!(nK >= 0 && nK <= 10000)) { setMsg(cMsg, 'Số tiền nạp phải từ 0 đến 10000 USD.', 'err'); return; }
+      cBtn.disabled = true;
+      setMsg(cMsg, 'Đang lưu...');
+      api('POST', '/api/admin/settings', { dailyReadings: nR, dailyCostUsd: nC, creditUsd: nK, creditStart: cStart.value || '' }).then(function (out) {
+        cBtn.disabled = false;
+        if (handleAuthFail(out)) return;
+        if (out.status !== 200) { setMsg(cMsg, out.data.error || 'Không lưu được.', 'err'); return; }
+        setMsg(cMsg, 'Đã lưu cài đặt.', 'ok');
+        loadStats();
+      }).catch(function () { cBtn.disabled = false; setMsg(cMsg, 'Không kết nối được máy chủ.', 'err'); });
+    });
+
     function decodeJwt(t) {
       try {
         var p = t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
@@ -209,7 +421,7 @@
       b.addEventListener('click', function () {
         state.token = null; state.exp = 0; state.email = ''; save();
         try { google.accounts.id.disableAutoSelect(); } catch (e) {}
-        state.users = []; renderTable();
+        state.users = []; renderTable(); state.statsLoaded = false;
         showSignedOut();
       });
       who.appendChild(b);
@@ -230,6 +442,7 @@
         signOutLink();
         setMsg(topMsg, '');
         renderTable();
+        if (!state.statsLoaded) { state.statsLoaded = true; loadStats(); }
       }).catch(function () { reload.disabled = false; setMsg(topMsg, 'Không kết nối được máy chủ.', 'err'); });
     }
     reload.addEventListener('click', loadUsers);
