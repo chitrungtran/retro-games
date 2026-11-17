@@ -144,6 +144,32 @@ to{opacity:0}
 .hcc-answer.hcc-long{padding:18px 16px}
 .hcc-ask{padding:14px 12px}
 }
+.hcc-print-actions{display:flex;justify-content:center;padding-top:16px;margin-top:8px;border-top:1px solid var(--line-2)}
+.hcc-print-only{display:none}
+@media print{#b-navbar,#comments,#header,#navbar,#notif-widget,.bMenu,.blog-pager,.blogPg,.brdCmb,.cdtIn,.comments,.fotIn,.hcc-ask,.hcc-btn,.hcc-btn-ghost,.hcc-form,.hcc-intro,.hcc-loading,.hcc-print-actions,.hcc-quota,.hcc-status,.headCn,.headIn,.header,.itemFt,.mnMn,.mnMob,.navI,.ntfC,.shL,.sidebar,.toTop,.toTopF,aside.sidebar,footer,header,nav.navI{display:none!important}
+.hcc::after,.hcc::before{display:none!important;content:none!important}
+@page{margin:15mm 16mm}
+body,html{background:#fff!important;color:#111!important;margin:0!important;padding:0!important;color-scheme:light!important}
+#hcc-root,.blogCont,.blogItm,.blogM,.hcc,.mainIn,.mainbar,.ntry,.ps,.widget,.widget-content{background:#fff!important;box-shadow:none!important;border:0!important;max-width:none!important;margin:0!important;padding:0!important}
+.blogCont,.blogItm,.blogM,.mainIn,.mainbar,.ntry,.ps,.widget,.widget-content{display:block!important;width:auto!important;float:none!important}
+#hcc-root,.hcc{color:#111!important;border-radius:0!important;overflow:visible!important;color-scheme:light!important;font-size:12pt;line-height:1.55}
+.hcc *,.hcc ::after,.hcc ::before{animation:none!important;transition:none!important;text-shadow:none!important}
+.hcc-print-only{display:block!important}
+.hcc-print-head{text-align:center;margin:0 0 14pt;padding:0 0 10pt;border-bottom:1.5pt solid #111;break-inside:avoid;page-break-inside:avoid}
+.hcc-print-brand{font-family:"Cormorant SC","Cormorant Garamond",serif;font-weight:700;font-size:22pt;letter-spacing:.12em;color:#111;line-height:1.1}
+.hcc-print-title{font-family:"Cormorant Garamond","Lora",serif;font-weight:700;font-size:14pt;color:#333;margin-top:2pt}
+.hcc-print-dl{display:grid;grid-template-columns:auto 1fr;gap:2pt 10pt;max-width:150mm;margin:8pt auto 0;text-align:left;font-size:11pt}
+.hcc-print-dl dt{font-weight:700}
+.hcc-print-dl dd,.hcc-print-dl dt{margin:0;color:#111}
+.hcc-answer{background:#fff!important;color:#111!important;box-shadow:none!important;border:0!important;border-radius:0!important;margin:0 0 16pt!important;padding:0!important;break-before:auto}
+.hcc-answer .hcc-sec,.hcc-answer h2{break-after:avoid;page-break-after:avoid}
+.hcc-answer h2{border-color:#333!important;font-size:16pt;margin:0 0 8pt!important;letter-spacing:.04em;break-inside:avoid}
+.hcc-answer li,.hcc-answer p,.hcc-keep{break-inside:avoid;page-break-inside:avoid}
+.hcc-answer .hcc-sec{color:#111!important;font-size:13pt;margin:12pt 0 6pt;padding-left:10pt;border-left:3px solid #333!important}
+.hcc-answer h2,.hcc-answer li,.hcc-answer p{color:#111!important;background:0 0!important}
+.hcc-answer li,.hcc-answer p{font-size:11.5pt;line-height:1.55}
+.hcc-answer li::marker{color:#111}
+}
 .hcc-tarot-form{gap:12px}
 .hcc-tarot-modes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .hcc-tarot-modes button{appearance:none;border:1px solid var(--line);background:var(--field);color:var(--muted);border-radius:3px;padding:10px 8px;cursor:pointer;font-family:"Cormorant SC","Cormorant Garamond",serif;font-weight:700;font-size:1.02rem;letter-spacing:.06em}
@@ -285,7 +311,25 @@ to{opacity:0}
 .hcc-deck-card,.hcc-tarot-deck *,.hcc-tc *,.hcc-tc-inner{animation:none!important}
 .hcc-tc.is-revealed .hcc-tc-glow{opacity:.22}
 }
-@media print{.hcc-amb,.hcc-ask,.hcc-fan,.hcc-quota,.hcc-tarot-deck,.hcc-tarot-flipall,.hcc-tarot-form,.hcc-tlb{display:none!important}
+@media print{.hcc-amb,.hcc-ask,.hcc-fan,.hcc-quota,.hcc-tarot-deck,.hcc-tarot-flipall,.hcc-tarot-form,.hcc-tarot-table,.hcc-tlb{display:none!important}
+.hcc-pc,.hcc-print-cards{break-inside:avoid;page-break-inside:avoid}
+.hcc-print-cards{display:flex!important;justify-content:center;gap:8mm;margin:0 0 12pt}
+.hcc-pc{margin:0;width:46mm;text-align:center}
+.hcc-print-cards.is-one .hcc-pc{width:62mm}
+.hcc-pc-pos{font-family:"Cormorant SC","Cormorant Garamond",serif;font-weight:700;font-size:11pt;letter-spacing:.08em;color:#111;margin-bottom:3pt}
+.hcc-pc-img{position:relative;width:100%;aspect-ratio:2/3;border-radius:3mm;overflow:hidden;border:.6pt solid #555}
+.hcc-pc-img img,.hcc-pc-img svg{display:block;width:100%;height:100%;object-fit:cover}
+.hcc-pc-img.is-rev .hcc-tc-art{transform:rotate(180deg)}
+.hcc-pc-img,.hcc-pc-img .hcc-tc-ph{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.hcc-pc figcaption{margin-top:4pt;display:flex;flex-direction:column;align-items:center;gap:1pt}
+.hcc-pc figcaption strong{font-family:"Cormorant Garamond","Lora",serif;font-size:12.5pt;color:#111}
+.hcc-pc figcaption em{font-style:normal;font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:#111;border:.6pt solid #555;border-radius:8pt;padding:0 6pt}
+.hcc-tarot-read{display:grid!important;gap:6pt;margin:0 0 14pt!important}
+.hcc-tarot-read.hcc-hidden{display:none!important}
+.hcc-tr-item{background:#fff!important;box-shadow:none!important;border:.6pt solid #999!important;border-left:2.5pt solid #333!important;padding:6pt 10pt!important;break-inside:avoid;page-break-inside:avoid}
+.hcc-tr-kw,.hcc-tr-name,.hcc-tr-name span,.hcc-tr-pos,.hcc-tr-y{color:#111!important}
+.hcc-tr-name{font-size:13pt}
+.hcc-tr-y{font-size:11pt}
 }
 #hcc-tarot-draw[disabled]{cursor:default}
 .hcc-hidden{display:none!important}

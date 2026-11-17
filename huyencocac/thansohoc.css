@@ -68,6 +68,32 @@
 .hcc-answer.hcc-long{padding:18px 16px}
 .hcc-ask{padding:14px 12px}
 }
+.hcc-print-actions{display:flex;justify-content:center;padding-top:16px;margin-top:8px;border-top:1px solid var(--line-2)}
+.hcc-print-only{display:none}
+@media print{#b-navbar,#comments,#header,#navbar,#notif-widget,.bMenu,.blog-pager,.blogPg,.brdCmb,.cdtIn,.comments,.fotIn,.hcc-ask,.hcc-btn,.hcc-btn-ghost,.hcc-form,.hcc-intro,.hcc-loading,.hcc-print-actions,.hcc-quota,.hcc-status,.headCn,.headIn,.header,.itemFt,.mnMn,.mnMob,.navI,.ntfC,.shL,.sidebar,.toTop,.toTopF,aside.sidebar,footer,header,nav.navI{display:none!important}
+.hcc::after,.hcc::before{display:none!important;content:none!important}
+@page{margin:15mm 16mm}
+body,html{background:#fff!important;color:#111!important;margin:0!important;padding:0!important;color-scheme:light!important}
+#hcc-root,.blogCont,.blogItm,.blogM,.hcc,.mainIn,.mainbar,.ntry,.ps,.widget,.widget-content{background:#fff!important;box-shadow:none!important;border:0!important;max-width:none!important;margin:0!important;padding:0!important}
+.blogCont,.blogItm,.blogM,.mainIn,.mainbar,.ntry,.ps,.widget,.widget-content{display:block!important;width:auto!important;float:none!important}
+#hcc-root,.hcc{color:#111!important;border-radius:0!important;overflow:visible!important;color-scheme:light!important;font-size:12pt;line-height:1.55}
+.hcc *,.hcc ::after,.hcc ::before{animation:none!important;transition:none!important;text-shadow:none!important}
+.hcc-print-only{display:block!important}
+.hcc-print-head{text-align:center;margin:0 0 14pt;padding:0 0 10pt;border-bottom:1.5pt solid #111;break-inside:avoid;page-break-inside:avoid}
+.hcc-print-brand{font-family:"Cormorant SC","Cormorant Garamond",serif;font-weight:700;font-size:22pt;letter-spacing:.12em;color:#111;line-height:1.1}
+.hcc-print-title{font-family:"Cormorant Garamond","Lora",serif;font-weight:700;font-size:14pt;color:#333;margin-top:2pt}
+.hcc-print-dl{display:grid;grid-template-columns:auto 1fr;gap:2pt 10pt;max-width:150mm;margin:8pt auto 0;text-align:left;font-size:11pt}
+.hcc-print-dl dt{font-weight:700}
+.hcc-print-dl dd,.hcc-print-dl dt{margin:0;color:#111}
+.hcc-answer{background:#fff!important;color:#111!important;box-shadow:none!important;border:0!important;border-radius:0!important;margin:0 0 16pt!important;padding:0!important;break-before:auto}
+.hcc-answer .hcc-sec,.hcc-answer h2{break-after:avoid;page-break-after:avoid}
+.hcc-answer h2{border-color:#333!important;font-size:16pt;margin:0 0 8pt!important;letter-spacing:.04em;break-inside:avoid}
+.hcc-answer li,.hcc-answer p,.hcc-keep{break-inside:avoid;page-break-inside:avoid}
+.hcc-answer .hcc-sec{color:#111!important;font-size:13pt;margin:12pt 0 6pt;padding-left:10pt;border-left:3px solid #333!important}
+.hcc-answer h2,.hcc-answer li,.hcc-answer p{color:#111!important;background:0 0!important}
+.hcc-answer li,.hcc-answer p{font-size:11.5pt;line-height:1.55}
+.hcc-answer li::marker{color:#111}
+}
 .hcc-tsh-result{margin-top:18px}
 .hcc-tsh-h{font-family:"Cormorant SC","Cormorant Garamond",serif;color:var(--gold-soft);font-size:1.35rem;letter-spacing:.06em;margin:18px 0 10px;font-weight:700;text-align:center}
 .hcc-tsh-h::after{content:"";display:block;width:120px;height:1px;margin:8px auto 0;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
@@ -98,5 +124,20 @@
 .hcc-tsh-grid{width:min(240px,100%);margin:0 auto}
 }
 @media print{#hcc-tsh-form,.hcc-ask,.hcc-quota{display:none!important}
+.hcc-tsh-result{margin:0 0 14pt!important}
+.hcc-tsh-h{color:#111!important;font-size:15pt;margin:10pt 0 8pt!important;break-after:avoid;page-break-after:avoid}
+.hcc-tsh-h::after{background:#333!important}
+.hcc-tsh-cards{grid-template-columns:1fr 1fr!important;gap:6pt!important}
+.hcc-tsh-card{background:#fff!important;box-shadow:none!important;border:.6pt solid #999!important;padding:7pt 9pt!important;break-inside:avoid;page-break-inside:avoid}
+.hcc-tsh-card.is-main{border-top:2pt solid #111!important}
+.hcc-tsh-num{background:#fff!important;border-color:#111!important;min-width:40pt!important;height:40pt!important;font-size:18pt!important}
+.hcc-tsh-card.is-main .hcc-tsh-num{min-width:50pt!important;height:50pt!important;font-size:23pt!important}
+.hcc-tsh-arrows h3,.hcc-tsh-arrows li,.hcc-tsh-arrows li b,.hcc-tsh-k,.hcc-tsh-kw,.hcc-tsh-num,.hcc-tsh-t,.hcc-tsh-y{color:#111!important}
+.hcc-tsh-y{font-size:10.5pt;line-height:1.5}
+.hcc-tsh-chart{grid-template-columns:52mm 1fr!important;gap:10pt!important;break-inside:avoid;page-break-inside:avoid}
+.hcc-tsh-grid{background:#fff!important;border-color:#111!important;width:52mm!important}
+.hcc-tsh-cell{color:#111!important;border-color:#777!important}
+.hcc-tsh-cell small,.hcc-tsh-cell.is-empty,.hcc-tsh-cell.is-empty small{color:#888!important}
+.hcc-tsh-arrows li{font-size:10.5pt}
 }
 .hcc-hidden{display:none!important}
