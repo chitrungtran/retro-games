@@ -266,6 +266,8 @@ body,html{background:#fff!important;color:#111!important;margin:0!important;padd
 .hcc-tr-kw{color:var(--gold-soft);font-style:italic;font-size:.88rem;margin:0 0 4px}
 .hcc-tr-y{margin:0;color:var(--ink);font-size:.95rem;line-height:1.65}
 .hcc-btn-ghost{appearance:none;background:0 0;border:1px solid var(--line);color:var(--gold-soft);border-radius:3px;padding:7px 14px;cursor:pointer;font-family:"Cormorant SC","Cormorant Garamond",serif;font-weight:700;letter-spacing:.06em;font-size:.95rem}
+.hcc-sfx-btn{position:absolute;top:8px;right:8px;z-index:3;min-width:40px;padding:6px 9px;font-size:1.05rem;letter-spacing:0;line-height:1}
+.hcc-sfx-btn.is-muted{opacity:.7}
 .hcc-tarot-deck,.hcc-tarot-flipall,.hcc-tarot-tip{position:relative;z-index:2}
 .hcc-amb{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .hcc-amb b,.hcc-mist{position:absolute;border-radius:50%}
@@ -311,7 +313,7 @@ body,html{background:#fff!important;color:#111!important;margin:0!important;padd
 .hcc-deck-card,.hcc-tarot-deck *,.hcc-tc *,.hcc-tc-inner{animation:none!important}
 .hcc-tc.is-revealed .hcc-tc-glow{opacity:.22}
 }
-@media print{.hcc-amb,.hcc-ask,.hcc-fan,.hcc-quota,.hcc-tarot-deck,.hcc-tarot-flipall,.hcc-tarot-form,.hcc-tarot-table,.hcc-tlb{display:none!important}
+@media print{.hcc-amb,.hcc-ask,.hcc-fan,.hcc-quota,.hcc-sfx-btn,.hcc-tarot-deck,.hcc-tarot-flipall,.hcc-tarot-form,.hcc-tarot-table,.hcc-tlb{display:none!important}
 .hcc-pc,.hcc-print-cards{break-inside:avoid;page-break-inside:avoid}
 .hcc-print-cards{display:flex!important;justify-content:center;gap:8mm;margin:0 0 12pt}
 .hcc-pc{margin:0;width:46mm;text-align:center}
