@@ -1,0 +1,21 @@
+Tarot card sound effects
+=======================
+
+Source pack: Casino Audio (1.1) by Kenney Vleugels (Kenney.nl)
+  https://kenney.nl/assets/casino-audio
+  Also listed on OpenGameArt.org as "54 Casino sound effects (cards, dice, chips)"
+
+License: Creative Commons Zero (CC0 1.0)
+  https://creativecommons.org/publicdomain/zero/1.0/
+
+You may use these assets in personal and commercial projects.
+Credit (Kenney or www.kenney.nl) would be nice but is not mandatory.
+
+The files in this folder were trimmed, faded, and re-encoded
+(mono, 22.05 kHz, Ogg Vorbis + MP3) from the original pack:
+
+  shuffle  <- Audio/card-shuffle.ogg (trimmed to about 1.85s)
+  draw     <- Audio/card-slide-1.ogg
+  place    <- Audio/card-place-2.ogg
+  flip     <- Audio/card-fan-1.ogg (crisp ending)
+  shimmer  <- Audio/card-fan-2.ogg (pitched, filtered, short echo)
