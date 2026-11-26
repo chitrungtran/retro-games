@@ -37,6 +37,8 @@
 .mnMn .hcc-tet-nav > label.a .n{color:#ffd76a!important}
 .mnMn .hcc-tet-nav > label.a{cursor:pointer}
 .hcc-tet-foot{margin-left:.6em}
+.hcc-tet-cover{max-width:760px;width:100%;margin:12px auto 0;padding:0;box-sizing:border-box}
+.hcc-tet-cover img{display:block;width:100%;height:auto}
 html.hcc-tet-deco-off .hcc-tet-deco,html.hcc-tet-deco-off .hcc-tet-banner{display:none!important}
 @media (max-width:896px){
   .hcc-tet-lantern{top:60px;height:80px}
