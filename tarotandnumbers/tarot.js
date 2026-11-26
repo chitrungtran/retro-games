@@ -19,6 +19,179 @@ function createTarotDraw(ids, opts) {
   return { draw: draw, shuffle: shuffle, randInt: randInt, isReversed: isReversed, REVERSED_RATE: RATE };
 }
 
+
+/**
+ * Shared tarot sound helper. Sounds live in sfx/ next to tarot.js.
+ * Play is lazy, never blocks the UI, and stays quiet if audio fails.
+ * Default volume 0.5; mute state is kept in localStorage (default ON).
+ */
+function createTarotSfx(opts) {
+  var o = opts || {};
+  var KEY = o.storageKey || 'tarot_sfx';
+  var VOL = o.volume == null ? 0.5 : o.volume;
+  var base = o.base || 'sfx/';
+  if (base && base.slice(-1) !== '/') base += '/';
+  var names = o.names || {};
+  var muteLabel = names.mute || 'Mute sound';
+  var unmuteLabel = names.unmute || 'Unmute sound';
+  var muted = false;
+  try { if (localStorage.getItem(KEY) === 'off') muted = true; } catch (e) {}
+
+  var ext = 'mp3';
+  try {
+    var probe = document.createElement('audio');
+    if (probe.canPlayType && /probably|maybe/.test(probe.canPlayType('audio/ogg; codecs="vorbis"'))) ext = 'ogg';
+  } catch (e) {}
+
+  var FILES = ['shuffle', 'draw', 'place', 'flip', 'shimmer'];
+  var ctx = null, buffers = {}, loading = false, active = {}, btn = null, unlocked = false;
+  var SILENT = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+
+  function url(name) { return base + name + '.' + ext; }
+
+  function getCtx() {
+    if (ctx) return ctx;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    try { ctx = new AC(); } catch (e) { return null; }
+    return ctx;
+  }
+
+  function preload() {
+    if (loading) return;
+    loading = true;
+    FILES.forEach(function (name) {
+      if (buffers[name] != null) return;
+      try {
+        if (!window.fetch) { buffers[name] = false; return; }
+        fetch(url(name), { mode: 'cors' }).then(function (r) {
+          if (!r.ok) throw new Error('sfx');
+          return r.arrayBuffer();
+        }).then(function (ab) {
+          var c = getCtx();
+          if (!c) { buffers[name] = false; return; }
+          return new Promise(function (res, rej) {
+            var ret = c.decodeAudioData(ab, res, rej);
+            if (ret && ret.then) ret.then(res, rej);
+          }).then(function (buf) { buffers[name] = buf; }, function () { buffers[name] = false; });
+        }).catch(function () { buffers[name] = false; });
+      } catch (e) { buffers[name] = false; }
+    });
+  }
+
+  function unlock() {
+    if (!unlocked) {
+      unlocked = true;
+      try {
+        var a = new Audio(SILENT);
+        a.volume = 0.01;
+        var p = a.play();
+        if (p && p.catch) p.catch(function () {});
+      } catch (e) {}
+    }
+    var c = getCtx();
+    if (c && c.state === 'suspended') {
+      var rp = c.resume();
+      if (rp && rp.catch) rp.catch(function () {});
+    }
+    preload();
+  }
+
+  function forget(name, handle) {
+    var arr = active[name];
+    if (!arr) return;
+    var i = arr.indexOf(handle);
+    if (i >= 0) arr.splice(i, 1);
+  }
+
+  function play(name) {
+    if (muted || FILES.indexOf(name) < 0) return;
+    try {
+      unlock();
+      var c = getCtx();
+      var buf = buffers[name];
+      if (c && buf && buf !== false) {
+        var src = c.createBufferSource();
+        src.buffer = buf;
+        var g = c.createGain();
+        g.gain.value = VOL;
+        src.connect(g);
+        g.connect(c.destination);
+        var handle = { src: src };
+        if (!active[name]) active[name] = [];
+        active[name].push(handle);
+        src.onended = function () { forget(name, handle); };
+        src.start(0);
+        return;
+      }
+      var a = new Audio(url(name));
+      a.volume = VOL;
+      var handleA = { audio: a };
+      if (!active[name]) active[name] = [];
+      active[name].push(handleA);
+      a.addEventListener('ended', function () { forget(name, handleA); });
+      var p = a.play();
+      if (p && p.catch) p.catch(function () { forget(name, handleA); });
+    } catch (e) {}
+  }
+
+  function stop(name) {
+    try {
+      var arr = (active[name] || []).slice();
+      active[name] = [];
+      arr.forEach(function (x) {
+        try { if (x.src) x.src.stop(0); } catch (e) {}
+        try { if (x.audio) { x.audio.pause(); x.audio.currentTime = 0; } } catch (e) {}
+      });
+    } catch (e) {}
+  }
+
+  function stopAll() { FILES.forEach(stop); }
+
+  function setMuted(on) {
+    muted = !!on;
+    try { localStorage.setItem(KEY, muted ? 'off' : 'on'); } catch (e) {}
+    if (muted) stopAll();
+    syncBtn();
+  }
+
+  function syncBtn() {
+    if (!btn) return;
+    btn.textContent = muted ? '\uD83D\uDD07' : '\uD83D\uDD0A';
+    var label = muted ? unmuteLabel : muteLabel;
+    btn.setAttribute('aria-label', label);
+    btn.setAttribute('title', label);
+    btn.setAttribute('aria-pressed', muted ? 'true' : 'false');
+    if (btn.classList) {
+      if (muted) btn.classList.add('is-muted');
+      else btn.classList.remove('is-muted');
+    }
+  }
+
+  function button() {
+    if (btn) return btn;
+    btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = o.btnClass || 'tarot-sfx-btn';
+    syncBtn();
+    btn.addEventListener('click', function () {
+      unlock();
+      setMuted(!muted);
+    });
+    return btn;
+  }
+
+  return {
+    play: play,
+    stop: stop,
+    unlock: unlock,
+    preload: preload,
+    button: button,
+    isMuted: function () { return muted; },
+    setMuted: setMuted
+  };
+}
+
 (function (w) {
   'use strict';
   var root = document.getElementById('tn-tarot');
@@ -31,6 +204,31 @@ function createTarotDraw(ids, opts) {
   var deck = createTarotDeck(), drawer = createTarotDraw(deck.ids);
   var POS3 = ['Past', 'Present', 'Future'];
   var current = null; // { spread: 'daily'|'three', cards: [{id, reversed}], question }
+  var sfxRun = 0;
+  var SFX_BASE = (function () {
+    try {
+      var sc = document.querySelector('script[src*="tarot.js"]');
+      if (sc && window.URL) {
+        var u = new URL(sc.getAttribute('src'), location.href).href;
+        if (/^https?:/.test(u) || u.indexOf('/') !== -1) return u.replace(/tarot\.js(\?.*)?$/, 'sfx/');
+      }
+    } catch (e) {}
+    return 'https://chitrungtran.github.io/retro-games/tarotandnumbers/sfx/';
+  })();
+  var sfx = (typeof createTarotSfx === 'function') ? createTarotSfx({
+    storageKey: 'tn_tarot_sfx',
+    volume: 0.5,
+    base: SFX_BASE,
+    btnClass: 'tn-sfx-btn',
+    names: { mute: 'Mute sound', unmute: 'Unmute sound' }
+  }) : { play: function () {}, stop: function () {}, unlock: function () {}, button: function () { return document.createElement('button'); } };
+  if (!document.getElementById('tn-sfx-css')) {
+    var sfxCss = document.createElement('style');
+    sfxCss.id = 'tn-sfx-css';
+    sfxCss.textContent = '.tn-sfx-btn{display:inline-flex;align-items:center;justify-content:center;margin-left:auto;min-width:48px;min-height:48px;padding:0 12px;border-radius:999px;border:1px solid var(--brass,#C4A574);background:transparent;color:var(--ink,#12141A);cursor:pointer;font-size:1.15rem;line-height:1}.tn-sfx-btn:hover{background:rgba(196,165,116,.15)}.tn-sfx-btn.is-muted{opacity:.7}@media print{.tn-sfx-btn{display:none!important}}';
+    (document.head || document.documentElement).appendChild(sfxCss);
+  }
+
 
   function today() { var t = new Date(); return t.getFullYear() + '-' + ('0' + (t.getMonth() + 1)).slice(-2) + '-' + ('0' + t.getDate()).slice(-2); }
   function readDaily() {
@@ -49,7 +247,7 @@ function createTarotDraw(ids, opts) {
   var actions = el('div', 'tn-actions');
   var bDaily = el('button', 'tn-btn tn-btn-brass', 'Draw today\'s card'); bDaily.type = 'button';
   var bThree = el('button', 'tn-btn tn-btn-ghost', 'Three-card spread'); bThree.type = 'button';
-  actions.appendChild(bDaily); actions.appendChild(bThree);
+  actions.appendChild(bDaily); actions.appendChild(bThree); actions.appendChild(sfx.button());
   var status = el('p', 'tn-status'); status.setAttribute('role', 'status');
   [qLabel, q, count, actions, status].forEach(function (n) { form.appendChild(n); });
 
@@ -81,6 +279,7 @@ function createTarotDraw(ids, opts) {
   function cardNode(c, label, idx) {
     var card = deck.byId[c.id];
     var fig = el('figure', 'tn-card' + (c.reversed ? ' is-reversed' : ''));
+    fig._sfxRun = sfxRun;
     fig.style.setProperty('--d', (idx * 0.18) + 's');
     var inner = el('div', 'tn-card-inner');
     var back = el('div', 'tn-card-back'); back.style.backgroundImage = 'url("' + CARD_BACK + '")';
@@ -98,7 +297,11 @@ function createTarotDraw(ids, opts) {
     function zoom() { openZoom(card, c.reversed); }
     fig.addEventListener('click', zoom);
     fig.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); zoom(); } });
-    setTimeout(function () { fig.classList.add('is-flipped'); }, 400 + idx * 350);
+    setTimeout(function () {
+      if (fig._sfxRun !== sfxRun) return;
+      fig.classList.add('is-flipped');
+      sfx.play('flip');
+    }, 400 + idx * 350);
     return fig;
   }
   function openZoom(card, rev) {
@@ -121,33 +324,47 @@ function createTarotDraw(ids, opts) {
     box.appendChild(el('p', null, c.reversed ? card.reversed : card.upright));
     return box;
   }
-  function show(spread, cards, note) {
+  function show(spread, cards, note, afterShuffle) {
     current = { spread: spread, cards: cards, question: (q.value || '').trim() };
+    var my = sfxRun;
     spreadEl.textContent = ''; meaningsEl.textContent = '';
     spreadEl.className = 'tn-spread tn-spread-' + cards.length;
     rTitle.textContent = spread === 'daily' ? 'Your card for today' : 'Past, Present, Future';
+    if (afterShuffle) sfx.play('draw');
     cards.forEach(function (c, i) {
       var label = spread === 'three' ? POS3[i] : '';
       spreadEl.appendChild(cardNode(c, label, i));
       meaningsEl.appendChild(meaningNode(c, label));
+      setTimeout(function () { if (my === sfxRun) sfx.play('place'); }, 90 + i * 80);
     });
+    setTimeout(function () { if (my === sfxRun) sfx.play('shimmer'); }, 400 + (cards.length - 1) * 350 + 820);
     answer.classList.add('tn-hidden'); aiStatus.textContent = '';
     status.textContent = note || '';
     result.classList.remove('tn-hidden');
     if (result.scrollIntoView) result.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   function shuffleThen(fn) {
+    var my = ++sfxRun;
+    sfx.unlock();
+    sfx.play('shuffle');
     bDaily.disabled = bThree.disabled = true;
     deckWrap.classList.add('is-shuffling');
-    setTimeout(function () { deckWrap.classList.remove('is-shuffling'); bDaily.disabled = bThree.disabled = false; fn(); }, 1100);
+    setTimeout(function () {
+      if (my !== sfxRun) return;
+      sfx.stop('shuffle');
+      deckWrap.classList.remove('is-shuffling');
+      bDaily.disabled = bThree.disabled = false;
+      fn();
+    }, 1100);
   }
 
   bDaily.addEventListener('click', function () {
+    sfx.unlock();
     var saved = readDaily();
-    if (saved) { show('daily', [saved], 'You have already drawn today\'s card. A new one is waiting tomorrow.'); return; }
-    shuffleThen(function () { var c = drawer.draw(1)[0]; saveDaily(c); show('daily', [c]); });
+    if (saved) { sfxRun++; show('daily', [saved], 'You have already drawn today\'s card. A new one is waiting tomorrow.', false); return; }
+    shuffleThen(function () { var c = drawer.draw(1)[0]; saveDaily(c); show('daily', [c], '', true); });
   });
-  bThree.addEventListener('click', function () { shuffleThen(function () { show('three', drawer.draw(3)); }); });
+  bThree.addEventListener('click', function () { sfx.unlock(); shuffleThen(function () { show('three', drawer.draw(3), '', true); }); });
 
   var printBtn = TN.printButton(result, 'Tarot & Numbers - Tarot reading');
   aiBtn.addEventListener('click', function () {
