@@ -43,7 +43,6 @@ html.hcc-tet-deco-off .hcc-tet-deco,html.hcc-tet-deco-off .hcc-tet-banner{displa
 @media (max-width:896px){
   .hcc-tet-lantern{top:60px;height:80px}
   .hcc-tet-close{right:48px}.hcc-tet-preview{left:48px;top:auto;bottom:4px}
-  .hcc-tet-banner.has-img .hcc-tet-close{top:6px;right:56px;width:26px;height:26px;line-height:22px;font-size:16px}
   .hcc-tet-banner.has-img .hcc-tet-preview{top:6px;bottom:auto;left:50%;transform:translateX(-50%)}
   .hcc-tet-banner{padding:10px 82px}
   .hcc-tet-lantern.is-left{left:6px}.hcc-tet-lantern.is-right{right:6px}
@@ -54,3 +53,4 @@ html.hcc-tet-deco-off .hcc-tet-deco,html.hcc-tet-deco-off .hcc-tet-banner{displa
 }
 @media print{.hcc-tet-deco,.hcc-tet-banner{display:none!important}}
 @media (prefers-reduced-motion:reduce){.hcc-tet-lantern{animation:none}.hcc-tet-petals{display:none}}
+.hcc-tet-close{display:none!important}
