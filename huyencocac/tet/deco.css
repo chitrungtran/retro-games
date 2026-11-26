@@ -1,0 +1,52 @@
+/* Huyen Co Cac - Tet decoration. ASCII only. Loaded only while the Tet gate is open. */
+.hcc-tet-banner{position:relative;z-index:20;margin:0;padding:10px 124px 10px;text-align:center;color:#fbe7b0;
+  background:#7d1a14 linear-gradient(180deg,#b3261e 0%,#8e1d16 60%,#6e140f 100%) center/cover no-repeat;
+  border-bottom:2px solid #d4a64a;box-shadow:0 6px 18px -8px rgba(0,0,0,.7);font-family:"Cormorant SC","Cormorant Garamond","Lora",serif}
+.hcc-tet-banner.has-img{padding:0 0 8px;background:#120d0a;border-bottom:2px solid #d4a64a}
+.hcc-tet-banner-img{display:block;width:100%;height:auto;max-height:400px;object-fit:cover;object-position:center}
+.hcc-tet-banner.has-img .hcc-tet-title{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.hcc-tet-banner.has-img .hcc-tet-close{top:12px;right:120px;transform:none}
+.hcc-tet-banner-in{display:inline-block;padding:4px 14px;border-radius:4px}
+.hcc-tet-banner.has-img .hcc-tet-banner-in{margin-top:6px}
+.hcc-tet-title{margin:0;font-size:22px;font-weight:700;letter-spacing:.08em;color:#ffe08a;text-shadow:0 2px 0 #4a0c08,0 0 18px rgba(255,200,90,.35)}
+.hcc-tet-links{margin:2px 0 0;font-family:"Lora",Georgia,serif;font-size:14px}
+.hcc-tet-links a{color:#fff2cf!important;text-decoration:none;border-bottom:1px dotted rgba(255,226,150,.6);margin:0 6px}
+.hcc-tet-links a:hover{color:#ffe08a!important;border-bottom-color:#ffe08a}
+.hcc-tet-links span{color:#d4a64a}
+.hcc-tet-close{position:absolute;right:84px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,224,138,.6);
+  background:rgba(0,0,0,.25);color:#ffe08a;font-size:18px;line-height:26px;cursor:pointer;padding:0}
+.hcc-tet-preview{position:absolute;left:84px;top:6px;font:700 11px/1 Arial,sans-serif;letter-spacing:.05em;background:#ffe08a;color:#6e140f;padding:4px 6px;border-radius:3px}
+.hcc-tet-deco{position:fixed;pointer-events:none;z-index:25}
+.hcc-tet-deco img,.hcc-tet-deco svg{display:block;width:100%;height:auto}
+.hcc-tet-lantern img,.hcc-tet-lantern svg{width:auto;height:100%}
+.hcc-tet-lantern{top:76px;height:140px;transform-origin:50% 0;animation:hccTetSway 4.5s ease-in-out infinite}
+.hcc-tet-lantern.is-left{left:14px}
+.hcc-tet-lantern.is-right{right:14px;animation-delay:-2.2s}
+.hcc-tet-corner{bottom:0;width:190px;opacity:.95}
+.hcc-tet-corner.is-mai{left:0}
+.hcc-tet-corner.is-dao{right:0}
+.hcc-tet-corner.is-dao svg{transform:scaleX(-1)}
+.hcc-tet-corner.is-mai.has-img img{transform:scaleY(-1)}
+.hcc-tet-corner.is-dao.has-img img{transform:rotate(180deg)}
+.hcc-tet-petals{inset:0;overflow:hidden;z-index:24}
+.hcc-tet-petals i{position:absolute;top:-20px;width:10px;height:10px;border-radius:60% 0 60% 0;opacity:.85;animation:hccTetFall 12s linear infinite}
+.hcc-tet-petals i.is-mai{background:#f4c430}
+.hcc-tet-petals i.is-dao{background:#f49ac1}
+@keyframes hccTetSway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes hccTetFall{0%{transform:translate3d(0,-20px,0) rotate(0)}100%{transform:translate3d(60px,105vh,0) rotate(360deg)}}
+.mnMn .hcc-tet-nav > label.a .n{color:#ffd76a!important}
+.mnMn .hcc-tet-nav > label.a{cursor:pointer}
+.hcc-tet-foot{margin-left:.6em}
+html.hcc-tet-deco-off .hcc-tet-deco,html.hcc-tet-deco-off .hcc-tet-banner{display:none!important}
+@media (max-width:896px){
+  .hcc-tet-lantern{top:60px;height:80px}
+  .hcc-tet-close{right:48px}.hcc-tet-preview{left:48px;top:auto;bottom:4px}
+  .hcc-tet-banner{padding:10px 82px}
+  .hcc-tet-lantern.is-left{left:6px}.hcc-tet-lantern.is-right{right:6px}
+  .hcc-tet-corner{width:76px;opacity:.75}
+  .hcc-tet-title{font-size:18px}
+  .hcc-tet-links{font-size:13px}
+  .hcc-tet-petals i:nth-child(n+7){display:none}
+}
+@media print{.hcc-tet-deco,.hcc-tet-banner{display:none!important}}
+@media (prefers-reduced-motion:reduce){.hcc-tet-lantern{animation:none}.hcc-tet-petals{display:none}}
