@@ -9,10 +9,10 @@
 .hcc-tet-banner-in{display:inline-block;padding:4px 14px;border-radius:4px}
 .hcc-tet-banner.has-img .hcc-tet-banner-in{margin-top:6px}
 .hcc-tet-title{margin:0;font-size:28px;font-weight:700;letter-spacing:.08em;color:#ffe08a;text-shadow:0 2px 0 #4a0c08,0 0 18px rgba(255,200,90,.35)}
-.hcc-tet-links{margin:8px 0 2px;font-family:"Lora",Georgia,serif;font-size:17px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
-.hcc-tet-links a{display:inline-block;color:#ffe9a8!important;text-decoration:none;font-weight:700;letter-spacing:.02em;padding:7px 18px;border:1.5px solid #e2b85a;border-radius:999px;background:linear-gradient(180deg,#c42b20 0%,#8e1d16 100%);box-shadow:0 2px 0 #4a0c08,0 0 12px rgba(255,200,90,.35);text-shadow:0 1px 0 #4a0c08;transition:transform .15s,box-shadow .15s}
-.hcc-tet-links a:hover{color:#fff7d6!important;transform:translateY(-1px);box-shadow:0 3px 0 #4a0c08,0 0 18px rgba(255,210,110,.6)}
-.hcc-tet-links span{display:none}
+.hcc-tet-links{margin:2px 0 0;font-family:"Lora",Georgia,serif;font-size:14px}
+.hcc-tet-links a{color:#fff2cf!important;text-decoration:none;border-bottom:1px dotted rgba(255,226,150,.6);margin:0 6px}
+.hcc-tet-links a:hover{color:#ffe08a!important;border-bottom-color:#ffe08a}
+.hcc-tet-links span{color:#d4a64a}
 .hcc-tet-close{position:absolute;right:84px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,224,138,.6);
   background:rgba(0,0,0,.25);color:#ffe08a;font-size:18px;line-height:26px;cursor:pointer;padding:0}
 .hcc-tet-preview{position:absolute;left:84px;top:6px;font:700 11px/1 Arial,sans-serif;letter-spacing:.05em;background:#ffe08a;color:#6e140f;padding:4px 6px;border-radius:3px}
@@ -49,7 +49,7 @@ html.hcc-tet-deco-off .hcc-tet-deco,html.hcc-tet-deco-off .hcc-tet-banner{displa
   .hcc-tet-corner{width:76px;opacity:.75}
   .hcc-tet-title{font-size:22px}
   .hcc-tet-banner-img{height:150px;max-height:none;object-fit:cover;object-position:50% 40%}
-  .hcc-tet-links{font-size:15px;display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:290px;margin:8px auto 2px}.hcc-tet-links a{padding:7px 8px}
+  .hcc-tet-links{font-size:13px}
   .hcc-tet-petals i:nth-child(n+7){display:none}
 }
 @media print{.hcc-tet-deco,.hcc-tet-banner{display:none!important}}
