@@ -48,6 +48,7 @@ html.hcc-tet-deco-off .hcc-tet-deco,html.hcc-tet-deco-off .hcc-tet-banner{displa
   .hcc-tet-lantern.is-left{left:6px}.hcc-tet-lantern.is-right{right:6px}
   .hcc-tet-corner{width:76px;opacity:.75}
   .hcc-tet-title{font-size:22px}
+  .hcc-tet-banner-img{height:150px;max-height:none;object-fit:cover;object-position:50% 40%}
   .hcc-tet-links{font-size:15px;display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:290px;margin:8px auto 2px}.hcc-tet-links a{padding:7px 8px}
   .hcc-tet-petals i:nth-child(n+7){display:none}
 }
