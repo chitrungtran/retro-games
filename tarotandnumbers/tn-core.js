@@ -145,8 +145,10 @@
   }
 
   /* ---------------- AI reading request ---------------- */
-  function ask(quota, mode, data, question) {
-    if (quota && !quota.beforeSubmit()) return Promise.resolve({ ok: false, handled: true });
+  /** opts.skipPrecheck: send even when the local quota says 0 (shared readings are free on the server). */
+  function ask(quota, mode, data, question, opts) {
+    opts = opts || {};
+    if (quota && !opts.skipPrecheck && !quota.beforeSubmit()) return Promise.resolve({ ok: false, handled: true });
     var ac = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = ac ? setTimeout(function () { ac.abort(); }, 120000) : null;
     return fetch(API_BASE + '/api/luan', {
@@ -160,7 +162,7 @@
       if (timer) clearTimeout(timer);
       if (quota && quota.afterResponse(o.res.status, o.j)) return { ok: false, handled: true };
       if (!o.res.ok) return { ok: false, error: (o.j && o.j.error) || 'The reading could not be prepared right now.' };
-      return { ok: true, answer: String((o.j && o.j.answer) || '') };
+      return { ok: true, answer: String((o.j && o.j.answer) || ''), data: o.j || {} };
     }).catch(function (err) {
       if (timer) clearTimeout(timer);
       return { ok: false, error: err && err.name === 'AbortError' ? 'The reading is taking too long. Please try again.' : 'Could not connect. Please check your connection and try again.' };
