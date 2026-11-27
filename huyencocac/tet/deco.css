@@ -55,3 +55,6 @@ html.hcc-tet-deco-off .hcc-tet-deco,html.hcc-tet-deco-off .hcc-tet-banner{displa
 @media print{.hcc-tet-deco,.hcc-tet-banner{display:none!important}}
 @media (prefers-reduced-motion:reduce){.hcc-tet-lantern{animation:none}.hcc-tet-petals{display:none}}
 .hcc-tet-close{display:none!important}
+.hcc-tet-banner.has-img{padding:0}
+.hcc-tet-banner.has-img .hcc-tet-banner-in{position:absolute;left:0;right:0;bottom:0;margin:0;padding:22px 10px 8px;border-radius:0;background:linear-gradient(180deg,rgba(18,13,10,0) 0%,rgba(18,13,10,.75) 55%,rgba(18,13,10,.9) 100%)}
+.hcc-tet-banner.has-img .hcc-tet-links a{text-shadow:0 1px 2px #000,0 0 6px rgba(0,0,0,.8)}
