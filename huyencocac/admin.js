@@ -240,7 +240,7 @@
       if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso || '';
       return iso.slice(8, 10) + '/' + iso.slice(5, 7) + '/' + iso.slice(0, 4);
     }
-    var FEATURE_NAMES = { tuvi: 'Xem Tử Vi', hopmang: 'Xem Hợp Mạng', thansohoc: 'Thần Số Học', tarot: 'Tarot', battu: 'Bát Tự', other: 'Khác' };
+    var FEATURE_NAMES = { tuvi: 'Xem Tử Vi', hopmang: 'Xem Hợp Mạng', thansohoc: 'Thần Số Học', tarot: 'Tarot', battu: 'Bát Tự', tonghop: 'Luận tổng hợp', other: 'Khác' };
     var LOW_CREDIT_USD = 2;
 
     function card(label, value, sub, kind, pct) {
@@ -278,7 +278,7 @@
       card('30 ngày qua', fmtInt(tot.n) + ' lượt', 'Chi phí ' + fmtUsd(tot.cost) + ' · trung bình ' + fmtUsd(perReading) + '/lượt' + (daysLeft != null ? ' · đủ khoảng ' + fmtInt(daysLeft) + ' ngày nữa' : ''));
 
       fBody.innerHTML = '';
-      ['tuvi', 'hopmang', 'thansohoc', 'tarot', 'battu', 'other'].forEach(function (k) {
+      ['tuvi', 'hopmang', 'thansohoc', 'tarot', 'battu', 'tonghop', 'other'].forEach(function (k) {
         var a = (t.f && t.f[k]) || {}; var b = (tot.f && tot.f[k]) || {};
         var tr = el('tr', (a.n || b.n) ? null : 'hcca-zero');
         tr.appendChild(el('td', null, FEATURE_NAMES[k]));
